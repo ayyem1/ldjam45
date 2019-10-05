@@ -32,6 +32,8 @@ public class Sentry : MonoBehaviour
         vectorToMouse.x = normalizedX * sentryRadius;
         vectorToMouse.y = normalizedY * sentryRadius;
 
-        sentryTransform.position = sentryCenter + vectorToMouse;
+        Quaternion rotation = transform.rotation;
+        rotation.SetLookRotation(vectorToMouse);
+        sentryTransform.SetPositionAndRotation(sentryCenter + vectorToMouse, rotation);
     }
 }
