@@ -7,8 +7,16 @@ public class Shield : MonoBehaviour
     [SerializeField] private Camera mainCamera = null;
     [SerializeField] private float shieldRadius = 0.0F;
     [SerializeField] private Vector3 shieldCenter = Vector3.zero;
+    [SerializeField] private Renderer shieldRenderer = null;
+    [SerializeField] private Material clickedMaterial = null;
+    [SerializeField] private Material notClickedMaterial = null;
 
     private Rect screenRect = new Rect(0, 0, Screen.width, Screen.height);
+
+    private void Start()
+    {
+        shieldRenderer.material = notClickedMaterial;
+    }
 
     private void Update()
     {
@@ -33,5 +41,14 @@ public class Shield : MonoBehaviour
         vectorToMouse.y = normalizedY * shieldRadius;
 
         shieldTransform.position = shieldCenter + vectorToMouse;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            shieldRenderer.material = clickedMaterial;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            shieldRenderer.material = notClickedMaterial;
+        }
     }
 }

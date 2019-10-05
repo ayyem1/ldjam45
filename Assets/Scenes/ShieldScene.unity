@@ -402,3 +402,6 @@ MonoBehaviour:
   mainCamera: {fileID: 496935972}
   shieldRadius: 10
   shieldCenter: {x: 0, y: 0, z: 20}
+  shieldRenderer: {fileID: 2117353965}
+  clickedMaterial: {fileID: 2100000, guid: 526c5f8ca05d09944a12794d6b78d538, type: 2}
+  notClickedMaterial: {fileID: 2100000, guid: 2f9d78d66ad99d747835c3557b582461, type: 2}
