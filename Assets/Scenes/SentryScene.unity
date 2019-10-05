@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 496935973}
   - component: {fileID: 496935972}
   - component: {fileID: 496935971}
+  - component: {fileID: 496935974}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -203,6 +204,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &496935974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496935970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78fa06a86117fc34aac2338a0b4e2253, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  remainingSentryAmmo: 10
 --- !u!1 &1472130544
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,10 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0baf7705d31cb5a40bdb801ef3a381c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shieldTransform: {fileID: 2117353967}
+  sentryTransform: {fileID: 2117353967}
   mainCamera: {fileID: 496935972}
-  shieldRadius: 10
-  shieldCenter: {x: 0, y: 0, z: 20}
-  shieldRenderer: {fileID: 2117353965}
-  clickedMaterial: {fileID: 2100000, guid: 526c5f8ca05d09944a12794d6b78d538, type: 2}
-  notClickedMaterial: {fileID: 2100000, guid: 2f9d78d66ad99d747835c3557b582461, type: 2}
+  sentryRadius: 10
+  sentryCenter: {x: 0, y: 0, z: 20}
