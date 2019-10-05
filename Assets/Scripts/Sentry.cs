@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Sentry : MonoBehaviour
@@ -7,15 +8,20 @@ public class Sentry : MonoBehaviour
     [SerializeField] private Camera mainCamera = null;
     [SerializeField] private float sentryRadius = 0.0F;
     [SerializeField] private Vector3 sentryCenter = Vector3.zero;
+    [SerializeField] private float sentryCooldownInSeconds = 0.1F;
+    [SerializeField] private uint ammoAmount = 10;
 
-    private Rect screenRect = new Rect(0, 0, Screen.width, Screen.height);
-    private uint ammoAmount = 0;
+    private bool isSentryCoolingDown = false;
 
     private void Update()
     {
-        Debug.Log(Input.GetAxis("Fire1") > 0);
+        if (Input.GetAxis("Fire1") > 0)
         {
-            Shoot();
+            if (isSentryCoolingDown == false && ammoAmount > 0)
+            {
+                StartCoroutine(Shoot());
+                isSentryCoolingDown = true;
+            }
         }
 
         Vector3 mousePosition = Input.mousePosition;
@@ -47,14 +53,18 @@ public class Sentry : MonoBehaviour
         sentryTransform.SetPositionAndRotation(vectorToMouse, rotation);
     }
 
-    private void Shoot()
+    private IEnumerator Shoot()
     {
-        if (ammoAmount == 0)
-        {
-            return;
-        }
+        Debug.Log("Firing");
         ammoAmount -= 1;
         // TODO: Spawn projectile.
+        yield return new WaitForSeconds(sentryCooldownInSeconds);
+        isSentryCoolingDown = false;
+    }
+
+    public uint GetAmmoAmout()
+    {
+        return ammoAmount;
     }
 
     public void AddAmmo(uint amountToAdd)
