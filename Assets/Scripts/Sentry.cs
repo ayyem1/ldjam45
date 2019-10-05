@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class Sentry : MonoBehaviour
 {
-    // Movement
-    [SerializeField] private Camera mainCamera = null;
     [SerializeField] private float sentryRadius = 0.0F;
     [SerializeField] private Vector3 sentryCenter = Vector3.zero;
-
-    // Shoot
     [SerializeField] private float sentryCooldownInSeconds = 0.1F;
     [SerializeField] private uint ammoAmount = 10;
     [SerializeField] private Transform launchPoint = null;
     [SerializeField] private GameObject kiBlastPrefabToSpawn = null;
 
+    private Camera mainCamera = null;
     private bool isSentryCoolingDown = false;
+
+    private void Start()
+    {
+        mainCamera = Camera.main;
+    }
 
     private void Update()
     {
