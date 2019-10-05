@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Sentry : MonoBehaviour
 {
-    [SerializeField] private Transform sentryTransform = null;
+    // Movement
     [SerializeField] private Camera mainCamera = null;
     [SerializeField] private float sentryRadius = 0.0F;
     [SerializeField] private Vector3 sentryCenter = Vector3.zero;
+
+    // Shoot
     [SerializeField] private float sentryCooldownInSeconds = 0.1F;
     [SerializeField] private uint ammoAmount = 10;
-    [SerializeField] private GameObject projectileToSpawn;
+    [SerializeField] private Transform launchPoint = null;
+    [SerializeField] private GameObject kiBlastPrefabToSpawn = null;
 
     private bool isSentryCoolingDown = false;
 
@@ -26,11 +29,10 @@ public class Sentry : MonoBehaviour
         }
 
         Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = sentryTransform.position.z - mainCamera.transform.position.z;
+        mousePosition.z = transform.position.z - mainCamera.transform.position.z;
         mousePosition = mainCamera.ScreenToWorldPoint(mousePosition);
 
         Vector3 vectorToMouse = mousePosition - sentryCenter;
-        Debug.Log("Vector to mouse: " + vectorToMouse);
         // Clamp the sentry arc to the top half of the circle.
         // This translates to all y coordinates greater than
         // the center
@@ -46,24 +48,23 @@ public class Sentry : MonoBehaviour
         float normalizedY = vectorToMouse.y / magnitude;
         vectorToMouse.x = normalizedX * sentryRadius;
         vectorToMouse.y = normalizedY * sentryRadius;
-
-        Quaternion rotation = transform.rotation;
-        rotation.SetLookRotation(vectorToMouse);
+        Quaternion rotation = Quaternion.LookRotation(transform.forward, vectorToMouse);
         vectorToMouse.x += sentryCenter.x;
         vectorToMouse.y += sentryCenter.y;
         vectorToMouse.z += sentryCenter.z;
-        sentryTransform.SetPositionAndRotation(vectorToMouse, rotation);
+        transform.SetPositionAndRotation(vectorToMouse, rotation);
     }
 
     private IEnumerator Shoot()
     {
         ammoAmount -= 1;
-        // TODO: Spawn projectile.
+        GameObject projectile = Instantiate(kiBlastPrefabToSpawn);
+        projectile.transform.SetPositionAndRotation(launchPoint.position, launchPoint.rotation);
         yield return new WaitForSeconds(sentryCooldownInSeconds);
         isSentryCoolingDown = false;
     }
 
-    public uint GetAmmoAmout()
+    public uint GetAmmoAmount()
     {
         return ammoAmount;
     }
