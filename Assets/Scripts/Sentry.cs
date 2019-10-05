@@ -25,6 +25,7 @@ public class Sentry : MonoBehaviour
         // path to the other side of the semi-circle instead of
         // jumping there.
         vectorToMouse.y += 1.0F;
+
         float sqrmag = vectorToMouse.sqrMagnitude;
         float magnitude = (float) Math.Sqrt(sqrmag);
         float normalizedX = vectorToMouse.x / magnitude;
@@ -34,6 +35,9 @@ public class Sentry : MonoBehaviour
 
         Quaternion rotation = transform.rotation;
         rotation.SetLookRotation(vectorToMouse);
-        sentryTransform.SetPositionAndRotation(sentryCenter + vectorToMouse, rotation);
+        vectorToMouse.x += sentryCenter.x;
+        vectorToMouse.y += sentryCenter.y;
+        vectorToMouse.z += sentryCenter.z;
+        sentryTransform.SetPositionAndRotation(vectorToMouse, rotation);
     }
 }
