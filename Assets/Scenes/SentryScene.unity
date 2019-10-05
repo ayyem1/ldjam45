@@ -324,7 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fa06a86117fc34aac2338a0b4e2253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  remainingSentryAmmo: 10
+  sentry: {fileID: 63457227}
 --- !u!1 &1146316645
 GameObject:
   m_ObjectHideFlags: 0

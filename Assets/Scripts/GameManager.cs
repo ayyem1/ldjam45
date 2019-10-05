@@ -3,7 +3,7 @@
 public sealed class GameManager : MonoBehaviour
 {
     private static GameManager instance = null;
-    [SerializeField] public uint remainingSentryAmmo = 0;
+    [SerializeField] public Sentry sentry = null;
 
     public static GameManager Instance
     {

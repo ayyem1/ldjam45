@@ -9,9 +9,15 @@ public class Sentry : MonoBehaviour
     [SerializeField] private Vector3 sentryCenter = Vector3.zero;
 
     private Rect screenRect = new Rect(0, 0, Screen.width, Screen.height);
+    private uint ammoAmount = 0;
 
     private void Update()
     {
+        Debug.Log(Input.GetAxis("Fire1") > 0);
+        {
+            Shoot();
+        }
+
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = sentryTransform.position.z - mainCamera.transform.position.z;
         mousePosition = mainCamera.ScreenToWorldPoint(mousePosition);
@@ -39,5 +45,32 @@ public class Sentry : MonoBehaviour
         vectorToMouse.y += sentryCenter.y;
         vectorToMouse.z += sentryCenter.z;
         sentryTransform.SetPositionAndRotation(vectorToMouse, rotation);
+    }
+
+    private void Shoot()
+    {
+        if (ammoAmount == 0)
+        {
+            return;
+        }
+        ammoAmount -= 1;
+        // TODO: Spawn projectile.
+    }
+
+    public void AddAmmo(uint amountToAdd)
+    {
+        ammoAmount += amountToAdd;
+    }
+
+    public void RemoveAmmo(uint amountToRemove)
+    {
+        if (amountToRemove > ammoAmount)
+        {
+            ammoAmount = 0;
+        }
+        else
+        {
+            ammoAmount -= amountToRemove;
+        }
     }
 }
