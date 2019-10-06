@@ -1,0 +1,411 @@
+fileFormatVersion: 2
+guid: fa96507716980a446921325c29585e44
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6925722925055480530
+    second: monk_idle_spritesheet758x1000_0
+  - first:
+      213: 1634825983443830849
+    second: monk_idle_spritesheet758x1000_1
+  - first:
+      213: -4463144450542468736
+    second: monk_idle_spritesheet758x1000_2
+  - first:
+      213: -3653720697890875279
+    second: monk_idle_spritesheet758x1000_3
+  - first:
+      213: -6696669417637100100
+    second: monk_idle_spritesheet758x1000_4
+  - first:
+      213: 5251677161392991611
+    second: monk_idle_spritesheet758x1000_5
+  - first:
+      213: -4774999805669653683
+    second: monk_idle_spritesheet758x1000_6
+  - first:
+      213: -14344946366703858
+    second: monk_idle_spritesheet758x1000_7
+  - first:
+      213: 6327381869831310796
+    second: monk_idle_spritesheet758x1000_8
+  - first:
+      213: 371986511598685990
+    second: monk_idle_spritesheet758x1000_9
+  - first:
+      213: 3212165702932293061
+    second: monk_idle_spritesheet758x1000_10
+  - first:
+      213: -5523947110935488847
+    second: monk_idle_spritesheet758x1000_11
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: 12
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 1
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Windows Store Apps
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: 12
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 1
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: WebGL
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: 12
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 1
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: monk_idle_spritesheet758x1000_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1000
+        height: 758
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a016ef6ff77aa747a81e8822ba980a0
+      internalID: -6925722925055480530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monk_idle_spritesheet758x1000_1
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 0
+        width: 1000
+        height: 758
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ffd486346498ed4bbcf92835be296fa
+      internalID: 1634825983443830849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monk_idle_spritesheet758x1000_2
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 0
+        width: 1000
+        height: 758
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10d0c1843dc564b4bba26d401c254976
+      internalID: -4463144450542468736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monk_idle_spritesheet758x1000_3
+      rect:
+        serializedVersion: 2
+        x: 3000
+        y: 0
+        width: 1000
+        height: 758
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90e9e77f56675db4aa5a863946294787
+      internalID: -3653720697890875279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monk_idle_spritesheet758x1000_4
+      rect:
+        serializedVersion: 2
+        x: 4000
+        y: 0
+        width: 1000
+        height: 758
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f407b5bbf653cce4d8f5b8ea9b69f6b1
+      internalID: -6696669417637100100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monk_idle_spritesheet758x1000_5
+      rect:
+        serializedVersion: 2
+        x: 5000
+        y: 0
+        width: 1000
+        height: 758
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1144ed2528e4f54fb4687f3c4b81b51
+      internalID: 5251677161392991611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monk_idle_spritesheet758x1000_6
+      rect:
+        serializedVersion: 2
+        x: 6000
+        y: 0
+        width: 1000
+        height: 758
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa98ce7d1ae9c0647b30f2d94b91d965
+      internalID: -4774999805669653683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monk_idle_spritesheet758x1000_7
+      rect:
+        serializedVersion: 2
+        x: 7000
+        y: 0
+        width: 1000
+        height: 758
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0458e2684660544fb99aec51d508ce4
+      internalID: -14344946366703858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monk_idle_spritesheet758x1000_8
+      rect:
+        serializedVersion: 2
+        x: 8000
+        y: 0
+        width: 1000
+        height: 758
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93172f0713215ea4ab4b1231ba7c366c
+      internalID: 6327381869831310796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monk_idle_spritesheet758x1000_9
+      rect:
+        serializedVersion: 2
+        x: 9000
+        y: 0
+        width: 1000
+        height: 758
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf9056b1b3b8e1648adfa6869133b4ce
+      internalID: 371986511598685990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monk_idle_spritesheet758x1000_10
+      rect:
+        serializedVersion: 2
+        x: 10000
+        y: 0
+        width: 1000
+        height: 758
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e41844678ba55be4d97dcbe584bed5ed
+      internalID: 3212165702932293061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monk_idle_spritesheet758x1000_11
+      rect:
+        serializedVersion: 2
+        x: 11000
+        y: 0
+        width: 1000
+        height: 758
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a93fca00505223f409196910d78c06d4
+      internalID: -5523947110935488847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: e8ab420191838ad49af187b5bb2dd585
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -101,7 +101,6 @@ public class BreathingManager : MonoBehaviour
     #region BreathCallbacks
     private void BreathSuccess()
     {
-        Debug.LogError("BREATH SUCCESS!");
         if (BreathingManager.OnHit != null)
         {
             BreathingManager.OnHit();
@@ -110,7 +109,6 @@ public class BreathingManager : MonoBehaviour
 
     private void BreathFail()
     {
-        Debug.LogError("BREATH FAIL");
         if (BreathingManager.OnFail != null)
         {
             BreathingManager.OnFail();
@@ -145,7 +143,6 @@ public class BreathingManager : MonoBehaviour
         //It's possible the player hit the beat within the grace window before and after the beat, so checks both sides
         if (this.WasBeatMissed())
         {
-            Debug.LogError("MISS");
             if (BreathingManager.OnMiss != null)
             {
                 BreathingManager.OnMiss();

@@ -1,32 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PolarCoordinates;
 
 public class Temptation : MonoBehaviour
 {
     private float moveSpeed;
+    private Vector3 moveTrajectory;
     public int hitPoints; //1 for normal temptations, 5 for elite temptations
+
+    public float trajectoryAngleVariance = 10f;
+    public float trajectoryOffsetAngle;
 
     private void Awake()
     {
-        this.GetRandomMoveSpeed();   
+        this.GetRandomMoveSpeedAndTrajectory();   
     }
 
-    private void GetRandomMoveSpeed()
+    private void GetRandomMoveSpeedAndTrajectory()
     {
-        moveSpeed = Random.Range(GameManager.Instance.difficulty.minTemptationSpeed, GameManager.Instance.difficulty.maxTemptationSpeed);
+        float test = Random.Range(-trajectoryAngleVariance, trajectoryAngleVariance);
+
+        this.moveSpeed = Random.Range(GameManager.Instance.difficulty.minTemptationSpeed, GameManager.Instance.difficulty.maxTemptationSpeed);
+        this.trajectoryOffsetAngle = Mathf.Deg2Rad * test;
+        this.moveTrajectory = (GameManager.Instance.finalPlayerPosition - this.transform.position).normalized;
+        PolarCoordinate moveDirectionPolar = new PolarCoordinate(1.0f, this.moveTrajectory);
+        moveDirectionPolar.angle += trajectoryOffsetAngle;
+        this.moveTrajectory = moveDirectionPolar.PolarToCartesian();
     }
 
     void FixedUpdate()
     {
-        Vector3 moveDirection = (GameManager.Instance.finalPlayerPosition - this.transform.position).normalized; 
-        this.gameObject.transform.Translate(moveDirection * (this.moveSpeed * Time.fixedDeltaTime));    
+        this.gameObject.transform.Translate(this.moveTrajectory * (this.moveSpeed * Time.fixedDeltaTime));    
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.LogError("OnTriggerEnter");
-
         if (other.tag == "Player")
         {
             this.DamagePlayer();

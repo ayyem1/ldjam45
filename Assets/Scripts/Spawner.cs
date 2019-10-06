@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    public const int MAX_SPAWNABLE_ELITE_TEMPTATIONS = 3;
     public static int numSpawnedEliteTemptations;
     public static int numSpawnedTemptations;
 
@@ -14,10 +15,16 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator spawnTemptations = null;
 
+    private void Start()
+    {
+        ResetSpawner();
+        StartSpawner();   
+    }
+
     public void ResetSpawner()
     {
         Difficulty difficulty = GameManager.Instance.difficulty;
-        secondsBetweenSpawnAttempt = Random.Range(difficulty.minSecondsBetweenSpawns, difficulty.maxChanceToSpawnElite);
+        secondsBetweenSpawnAttempt = Random.Range(difficulty.minSecondsBetweenSpawns, difficulty.maxSecondsBetweenSpawns);
         probabiltyOfSpawnSuccess = Random.Range(difficulty.minChanceToSpawnSuccessfully, difficulty.minChanceToSpawnSuccessfully);
         probabilityOfEliteSpawn = Random.Range(difficulty.minChanceToSpawnElite, difficulty.maxChanceToSpawnElite);
     }
@@ -30,13 +37,34 @@ public class Spawner : MonoBehaviour
         }
         spawnTemptations = SpawnTemptations();
         StartCoroutine(spawnTemptations);
-
     }
 
     public IEnumerator SpawnTemptations()
     {
-        // TODO: Implement this.
-        yield return null;
+        Difficulty difficulty = GameManager.Instance.difficulty;
+
+        while (true)
+        {
+            yield return new WaitForSeconds(this.secondsBetweenSpawnAttempt);
+            this.AttemptTemptationSpawn();
+        }
+    }
+
+    private void AttemptTemptationSpawn()
+    {
+        float initialSpawnRoll = Random.Range(0.0f, 100.0f);
+        if (initialSpawnRoll <= probabiltyOfSpawnSuccess)
+        {
+            float eliteSpawnRoll = Random.Range(0.0f, 100.0f);
+            if ((eliteSpawnRoll <= probabilityOfEliteSpawn) && (numSpawnedEliteTemptations < MAX_SPAWNABLE_ELITE_TEMPTATIONS))
+            {
+                Instantiate(eliteTemptationPrefab, this.transform.position, new Quaternion());
+            }
+            else
+            {
+                Instantiate(temptationPrefab, this.transform.position, new Quaternion());
+            }
+        }
     }
 
     public void StopSpawner()

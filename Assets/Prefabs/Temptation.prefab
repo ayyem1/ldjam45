@@ -105,8 +105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae31f540ff84d3844935043bbd3c0379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
   hitPoints: 1
+  trajectoryAngleVariance: 5
 --- !u!54 &4922259884401570746
 Rigidbody:
   m_ObjectHideFlags: 0
