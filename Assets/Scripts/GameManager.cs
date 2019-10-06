@@ -41,6 +41,8 @@ public sealed class GameManager : MonoBehaviour
     public uint playerHealth;
     public Vector3 finalPlayerPosition;
 
+    public uint maximumAmmoCount = 100;
+
     private static GameManager instance = null;
 
     [SerializeField] private RankTimer rankTimer = null;
