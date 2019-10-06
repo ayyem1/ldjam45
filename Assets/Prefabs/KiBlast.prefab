@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2976131355030668756}
   - component: {fileID: 966429923}
   m_Layer: 0
-  m_Name: Projectile
+  m_Name: KiBlast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,6 +104,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ff496118fa7a504082a47c7fdddc2b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 50
   damage: 1
-  kiBlastTransform: {fileID: 2976131355030668753}

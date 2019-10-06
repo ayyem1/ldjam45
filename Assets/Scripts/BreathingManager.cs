@@ -23,6 +23,9 @@ public class BreathingManager : MonoBehaviour
 
     private double _rawInputTimestamp = 0;
 
+    private uint ammoAddedPerBreathSuccess = 5;
+    private uint ammoRemovedPerBreathFail = 5;
+
     private double adjustedInputTimestamp
     {
         get { return _rawInputTimestamp - this.calibrationValue; }
@@ -106,6 +109,7 @@ public class BreathingManager : MonoBehaviour
         Debug.LogError("BREATH SUCCESS!");
         feedbackImage.sprite = Resources.Load<Sprite>("good");
 
+        GameManager.Instance.sentry.AddAmmo(this.ammoAddedPerBreathSuccess);
         if (BreathingManager.OnHit != null)
         {
             BreathingManager.OnHit();
@@ -116,7 +120,8 @@ public class BreathingManager : MonoBehaviour
     {
         feedbackImage.sprite = Resources.Load<Sprite>("bad");
 
-        Debug.LogError("FAIL");
+        Debug.LogError("BREATH FAIL");
+        GameManager.Instance.sentry.RemoveAmmo(this.ammoRemovedPerBreathFail);
         if (BreathingManager.OnMiss != null)
         {
             BreathingManager.OnMiss();
@@ -155,8 +160,6 @@ public class BreathingManager : MonoBehaviour
         //It's possible the player hit the beat within the grace window before and after the beat, so checks both sides
         if (this.WasBeatMissed())
         {
-            this.breathingSound.Play();
-
             Debug.LogError("MISS");
             if (BreathingManager.OnMiss != null)
             {
