@@ -16,6 +16,10 @@ MonoBehaviour:
   maxSecondsBetweenSpawns: 4
   minChanceToSpawnSuccessfully: 30
   maxChanceToSpawnSuccessfully: 60
+  minChanceToSpawnElite: 0
+  maxChanceToSpawnElite: 0
+  minTemptationSpeed: 3
+  maxTemptationSpeed: 7
   ammoReductionForMiss: 5
   ammoGrantForHit: 5
   breathBPM: 80

@@ -7,7 +7,9 @@ public sealed class GameManager : MonoBehaviour
 
     [SerializeField] private Rank firstRankOfHighScoreMode = null;
     [SerializeField] private RankTimer rankTimer = null;
-    
+
+    private bool isGameActive = false;
+
     public static GameManager Instance
     {
         get
@@ -35,7 +37,8 @@ public sealed class GameManager : MonoBehaviour
     [SerializeField] public Sentry sentry = null;
     [SerializeField] public Rank currentRank = null;
 
-    private bool isGameActive = false;
+    public uint playerHealth;
+    public Vector3 finalPlayerPosition;
 
     static GameManager() { }
     private GameManager() { }
