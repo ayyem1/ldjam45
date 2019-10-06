@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68c51afa69d5a2441a89e339d9d1faad, type: 3}
   m_Name: Test
   m_EditorClassIdentifier: 
-  minSecondsBetweenSpawns: 1
-  maxSecondsBetweenSpawns: 1
+  minSecondsBetweenSpawns: 3
+  maxSecondsBetweenSpawns: 5
   minChanceToSpawnSuccessfully: 100
   maxChanceToSpawnSuccessfully: 100
-  minChanceToSpawnElite: 0
-  maxChanceToSpawnElite: 0
+  minChanceToSpawnElite: 50
+  maxChanceToSpawnElite: 50
   minTemptationSpeed: 1
   maxTemptationSpeed: 5
   ammoReductionForMiss: 5

@@ -10,7 +10,7 @@ public class Temptation : MonoBehaviour
     public int hitPoints; //1 for normal temptations, 5 for elite temptations
 
     public float trajectoryAngleVariance = 10f;
-    public float trajectoryOffsetAngle;
+    private float trajectoryOffsetAngle;
 
     private void Awake()
     {
