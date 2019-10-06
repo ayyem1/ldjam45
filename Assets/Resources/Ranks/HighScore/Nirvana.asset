@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Nirvana
   m_EditorClassIdentifier: 
   rankDurationInSeconds: 60
-  rankName: Sample Rank
+  rankName: Nirvana
   nextRank: {fileID: 0}
+  gameMode: 1

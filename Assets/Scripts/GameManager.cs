@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public sealed class GameManager : MonoBehaviour
 {
-    private static GameManager instance = null;
-
-    [SerializeField] private Rank firstRankOfHighScoreMode = null;
-    [SerializeField] private RankTimer rankTimer = null;
-
-    private bool isGameActive = false;
+    /// <summary>
+    /// The boolean flag will represent whether
+    /// the level was also completed along with
+    /// ranking up.
+    /// </summary>
+    public static Action<bool> OnRankReached;
+    public static Action OnGameStarted;
 
     public static GameManager Instance
     {
@@ -35,10 +38,18 @@ public sealed class GameManager : MonoBehaviour
 
     [SerializeField] public Difficulty difficulty = null;
     [SerializeField] public Sentry sentry = null;
-    [SerializeField] public Rank currentRank = null;
-
     public uint playerHealth;
     public Vector3 finalPlayerPosition;
+
+    private static GameManager instance = null;
+
+    [SerializeField] private RankTimer rankTimer = null;
+    [SerializeField] private Rank initialRank = null;
+    [SerializeField] private float breathPauseInSeconds = 10.0F;
+    private Rank currentRank;
+    private bool isGamePausedForBreadth = true;
+    private float levelStartTime = 0.0F;
+    private float levelPauseTime = 0.0F;
 
     static GameManager() { }
     private GameManager() { }
@@ -51,14 +62,21 @@ public sealed class GameManager : MonoBehaviour
 
     private void Start()
     {
-        ResetGame();
+        ChangeRank(initialRank);
     }
 
-    public void ResetGame()
+    public void ChangeRank(Rank newRank)
     {
-        rankTimer.ResetTimer(GetAllRanksInNormalMode());
+        currentRank = newRank ?? currentRank;
+        if (currentRank.gameMode == GameMode.Normal)
+        {
+            rankTimer.ResetTimer(GetAllRanksForNormalLevel(), GetTotalDurationOfNormalLevel());
+        }
+        else
+        {
+            rankTimer.ResetTimer(currentRank);
+        }
     }
-
 
     private void OnHit()
     {
@@ -72,23 +90,65 @@ public sealed class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S) && isGameActive == false)
+        // TODO: Remove this debug code.
+        if (Input.GetKeyDown(KeyCode.S) && isGamePausedForBreadth == true)
         {
             StartGame();
         }
+
+        if (isGamePausedForBreadth == false)
+        {
+            if (Time.realtimeSinceStartup > levelStartTime + currentRank.rankDurationInSeconds)
+            {
+                PauseGameForBreadth();
+                OnRankReached?.Invoke(currentRank.nextRank.gameMode == GameMode.HighScore);
+            }
+        }
     }
 
-    public void StartGame()
+    private void StartGame()
     {
-        // TODO: Need to extend this for high score mode.
-        rankTimer.StartTimer();
-        isGameActive = true;
+        if (isGamePausedForBreadth == false)
+        {
+            return;
+        }
+
+        levelStartTime = Time.realtimeSinceStartup;
+        rankTimer.StartTimer(levelStartTime);
+        isGamePausedForBreadth = false;
+        OnGameStarted?.Invoke();
     }
 
-    public void StopGame()
+    public void PauseGameForBreadth()
     {
+        if (isGamePausedForBreadth == true)
+        {
+            return;
+        }
+
+        levelPauseTime = Time.realtimeSinceStartup;
         rankTimer.StopTimer();
-        isGameActive = false;
+        isGamePausedForBreadth = true;
+        StartCoroutine(PauseForBreath());
+    }
+    
+    private IEnumerator PauseForBreath()
+    {
+        yield return new WaitForSeconds(breathPauseInSeconds);
+    }
+
+    public void ContinueGameFromPauseForBreadth()
+    {
+        if (isGamePausedForBreadth == false)
+        {
+            return;
+        }
+
+        float diff = Time.realtimeSinceStartup - levelPauseTime;
+        levelStartTime += diff;
+        levelPauseTime = 0.0F;
+        rankTimer.StartTimer(levelStartTime);
+        isGamePausedForBreadth = false;
     }
 
     private void OnDestroy()
@@ -97,16 +157,34 @@ public sealed class GameManager : MonoBehaviour
         BreathingManager.OnFail -= OnFail;
     }
 
-    private IList<Rank> GetAllRanksInNormalMode()
+    private float GetTotalDurationOfNormalLevel()
     {
+        IList<Rank> ranksInLevel = GetAllRanksForNormalLevel();
+        float levelDuration = 0.0F;
+        for (int i = 0, count = ranksInLevel.Count; i < count; i++)
+        {
+            levelDuration += ranksInLevel[i].rankDurationInSeconds;
+        }
+
+        return levelDuration;
+    }
+
+    private IList<Rank> GetAllRanksForNormalLevel()
+    {
+        if (currentRank == null || currentRank.gameMode != GameMode.Normal)
+        {
+            throw new System.Exception("Attempted to get ranks for non-normal game mode. High score game mode only has one rank per level.");
+        }
+
         IList<Rank> ranks = new List<Rank>();
         Rank rank = currentRank;
-        while (rank !=null && rank.rankName != firstRankOfHighScoreMode.rankName)
+        do
         {
             ranks.Add(rank);
             rank = rank.nextRank;
-        }
+        } while (rank != null && rank.gameMode == GameMode.Normal);
 
         return ranks;
     }
+
 }
