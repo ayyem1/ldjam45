@@ -38,7 +38,7 @@ public sealed class GameManager : MonoBehaviour
 
     private void Start()
     {
-        timestampToSwitchToNextLevel = Time.realtimeSinceStartup + currentLevel.levelDurationInSeconds;
+        //timestampToSwitchToNextLevel = Time.realtimeSinceStartup + currentLevel.levelDurationInSeconds;
     }
 
     private void Update()
