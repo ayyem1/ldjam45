@@ -74,6 +74,11 @@ public class Sentry : MonoBehaviour
     public void AddAmmo(uint amountToAdd)
     {
         ammoAmount += amountToAdd;
+
+        if (ammoAmount > GameManager.Instance.maximumAmmoCount)
+        {
+            ammoAmount = GameManager.Instance.maximumAmmoCount;
+        }
     }
 
     public void RemoveAmmo(uint amountToRemove)
