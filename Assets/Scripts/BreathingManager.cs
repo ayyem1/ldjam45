@@ -8,14 +8,12 @@ public class BreathingManager : MonoBehaviour
     public delegate void BreathEvent();
     public static event BreathEvent OnHit;
     public static event BreathEvent OnMiss;
+    public static event BreathEvent OnFail;
 
     public const float INPUT_GRACE_BUFFER = 0.1f;
 
     public AudioSource clickSound;
     public AudioSource breathingSound;
-
-    public Image feedbackImage;
-    public Image beatImage;
 
     public double calibrationValue;
 
@@ -107,8 +105,6 @@ public class BreathingManager : MonoBehaviour
     private void BreathSuccess()
     {
         Debug.LogError("BREATH SUCCESS!");
-        feedbackImage.sprite = Resources.Load<Sprite>("good");
-
         GameManager.Instance.sentry.AddAmmo(this.ammoAddedPerBreathSuccess);
         if (BreathingManager.OnHit != null)
         {
@@ -118,22 +114,17 @@ public class BreathingManager : MonoBehaviour
 
     private void BreathFail()
     {
-        feedbackImage.sprite = Resources.Load<Sprite>("bad");
-
         Debug.LogError("BREATH FAIL");
         GameManager.Instance.sentry.RemoveAmmo(this.ammoRemovedPerBreathFail);
-        if (BreathingManager.OnMiss != null)
+        if (BreathingManager.OnFail != null)
         {
-            BreathingManager.OnMiss();
+            BreathingManager.OnFail();
         }
     }
     #endregion
 
     private void PlayClickSound()
     {
-        this.beatImage.enabled = true;
-        this.StartCoroutine(this.BlinkImage());
-
         this.clickSound.PlayScheduled(Metronome.currentBeatTime);
         StartCoroutine(this.DetectBreathMiss());
     }
@@ -152,7 +143,6 @@ public class BreathingManager : MonoBehaviour
         while (currentDspTime < endOfGraceBuffer)
         {
             currentDspTime = AudioSettings.dspTime;
-            //Debug.LogError("Looping!  CurrentDspTime: " + currentDspTime + " endOfGraceBuffer: " + endOfGraceBuffer);
             yield return 0;
         }
 
@@ -166,20 +156,6 @@ public class BreathingManager : MonoBehaviour
                 BreathingManager.OnMiss();
             }
         }
-    }
-
-    private IEnumerator BlinkImage()
-    {
-        double beatTime = Metronome.nextBeatTime;
-        double curTime = Metronome.nextBeatTime;
-
-        while (curTime <= (beatTime + INPUT_GRACE_BUFFER))
-        {
-            curTime = AudioSettings.dspTime;
-            yield return null;
-        }
-
-        this.beatImage.enabled = false;
     }
     #endregion
 }
