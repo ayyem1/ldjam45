@@ -101,7 +101,16 @@ public sealed class GameManager : MonoBehaviour
             if (Time.realtimeSinceStartup > levelStartTime + currentRank.rankDurationInSeconds)
             {
                 PauseGameForBreadth();
-                OnRankReached?.Invoke(currentRank.nextRank.gameMode == GameMode.HighScore);
+                bool isLevelComplete = currentRank.nextRank.gameMode == GameMode.HighScore;
+                OnRankReached?.Invoke(isLevelComplete);
+                if (isLevelComplete)
+                {
+                    ChangeRank(currentRank.nextRank);
+                } else
+                {
+                    // TODO: Clean this up.
+                    currentRank = currentRank.nextRank;
+                }
             }
         }
     }
@@ -135,6 +144,7 @@ public sealed class GameManager : MonoBehaviour
     private IEnumerator PauseForBreath()
     {
         yield return new WaitForSeconds(breathPauseInSeconds);
+        ContinueGameFromPauseForBreadth();
     }
 
     public void ContinueGameFromPauseForBreadth()
