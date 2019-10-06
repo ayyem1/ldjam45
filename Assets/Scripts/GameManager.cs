@@ -3,7 +3,11 @@
 public sealed class GameManager : MonoBehaviour
 {
     private static GameManager instance = null;
+
+    private float timestampToSwitchToNextLevel = 0.0F;
+
     [SerializeField] public Sentry sentry = null;
+    [SerializeField] public GameLevel currentLevel = null;
 
     public static GameManager Instance
     {
@@ -31,4 +35,14 @@ public sealed class GameManager : MonoBehaviour
     static GameManager() { }
 
     private GameManager() { }
+
+    private void Start()
+    {
+        timestampToSwitchToNextLevel = Time.realtimeSinceStartup + currentLevel.levelDurationInSeconds;
+    }
+
+    private void Update()
+    {
+        
+    }
 }
