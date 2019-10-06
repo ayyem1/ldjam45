@@ -1,13 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public sealed class GameManager : MonoBehaviour
 {
     private static GameManager instance = null;
 
-    private float timestampToSwitchToNextLevel = 0.0F;
-
-    [SerializeField] public Sentry sentry = null;
-    [SerializeField] public GameLevel currentLevel = null;
+    [SerializeField] private Rank firstRankOfHighScoreMode = null;
+    [SerializeField] private RankTimer rankTimer = null;
 
     public static GameManager Instance
     {
@@ -32,17 +31,39 @@ public sealed class GameManager : MonoBehaviour
         }
     }
 
+    [SerializeField] public Sentry sentry = null;
+    [SerializeField] public Rank currentRank = null;
+
     static GameManager() { }
 
     private GameManager() { }
 
-    private void Start()
-    {
-        timestampToSwitchToNextLevel = Time.realtimeSinceStartup + currentLevel.levelDurationInSeconds;
-    }
 
     private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            StartGame();
+        }
+    }
+
+    public void StartGame()
+    {
+        // TODO: Need to extend this for high score mode.
+        rankTimer.ResetTimer(GetAllRanksInNormalMode());
+        rankTimer.StartTimer();
+    }
+
+    private IList<Rank> GetAllRanksInNormalMode()
+    {
+        IList<Rank> ranks = new List<Rank>();
+        Rank rank = currentRank;
+        while (rank !=null && rank.rankName != firstRankOfHighScoreMode.rankName)
+        {
+            ranks.Add(rank);
+            rank = rank.nextRank;
+        }
+
+        return ranks;
     }
 }

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ddefd8e0559b7e42a8b775d359b23a4, type: 3}
   m_Name: Nirvana
   m_EditorClassIdentifier: 
-  levelDurationInSeconds: 60
-  levelName: Nirvana
-  nextLevel: {fileID: 0}
+  rankDurationInSeconds: 60
+  rankName: Sample Rank
+  nextRank: {fileID: 0}
