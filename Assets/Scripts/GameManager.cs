@@ -35,6 +35,9 @@ public sealed class GameManager : MonoBehaviour
     [SerializeField] public Sentry sentry = null;
     [SerializeField] public Rank currentRank = null;
 
+    public uint playerHealth;
+    public Vector3 finalPlayerPosition;
+
     static GameManager() { }
     private GameManager() { }
 

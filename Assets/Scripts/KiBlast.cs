@@ -26,4 +26,15 @@ public class KiBlast : MonoBehaviour
         newPosition.z += moveAmount.z;
         transform.position = newPosition;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        DestroyKiBlast();
+    }
+
+    private void DestroyKiBlast()
+    {
+        //Do KiBlast destroy vfx and sounds here
+        Destroy(this.gameObject);
+    }
 }
