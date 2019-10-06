@@ -15,28 +15,28 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator spawnTemptations = null;
 
-    private void Start()
+    private void Awake()
     {
-        ResetSpawner();
-        StartSpawner();   
-    }
-
-    public void ResetSpawner()
-    {
-        Difficulty difficulty = GameManager.Instance.difficulty;
-        secondsBetweenSpawnAttempt = Random.Range(difficulty.minSecondsBetweenSpawns, difficulty.maxSecondsBetweenSpawns);
-        probabiltyOfSpawnSuccess = Random.Range(difficulty.minChanceToSpawnSuccessfully, difficulty.minChanceToSpawnSuccessfully);
-        probabilityOfEliteSpawn = Random.Range(difficulty.minChanceToSpawnElite, difficulty.maxChanceToSpawnElite);
+        GameManager.OnGameStarted += StartSpawner;
     }
 
     public void StartSpawner()
     {
+        ResetSpawner();
         if (spawnTemptations != null)
         {
             StopSpawner();
         }
         spawnTemptations = SpawnTemptations();
         StartCoroutine(spawnTemptations);
+    }
+
+    private void ResetSpawner()
+    {
+        Difficulty difficulty = GameManager.Instance.difficulty;
+        secondsBetweenSpawnAttempt = Random.Range(difficulty.minSecondsBetweenSpawns, difficulty.maxSecondsBetweenSpawns);
+        probabiltyOfSpawnSuccess = Random.Range(difficulty.minChanceToSpawnSuccessfully, difficulty.minChanceToSpawnSuccessfully);
+        probabilityOfEliteSpawn = Random.Range(difficulty.minChanceToSpawnElite, difficulty.maxChanceToSpawnElite);
     }
 
     public IEnumerator SpawnTemptations()
@@ -73,6 +73,11 @@ public class Spawner : MonoBehaviour
         {
             StopCoroutine(spawnTemptations);
         }
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.OnGameStarted -= StartSpawner;
     }
 }
 

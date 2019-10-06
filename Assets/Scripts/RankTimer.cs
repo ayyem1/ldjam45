@@ -9,29 +9,28 @@ public class RankTimer : MonoBehaviour
     [SerializeField] private RectTransform sliderFillArea = null;
 
     private bool isActive = false;
-    private float levelStartTime = 0.0F;
+    private float startTime = 0.0F;
+    private float totalDurationOfCurrentLevel;
 
-    private IList<Rank> ranksToDisplay;
-
-    public void ResetTimer(Rank rankToDisplay)
+    public void ResetTimer(Rank rank)
     {
-        IList<Rank> ranks = new List<Rank> { rankToDisplay };
-        ResetTimer(ranks);
+        IList<Rank> ranks = new List<Rank> { rank };
+        ResetTimer(ranks, rank.rankDurationInSeconds);
     }
 
-    public void ResetTimer(IList<Rank> ranksToDisplay)
+    public void ResetTimer(IList<Rank> ranksInLevel, float totalDurationOfLevel)
     {
-        this.ranksToDisplay = ranksToDisplay;
         slider.SetValueWithoutNotify(0.0F);
         isActive = false;
-        SetRankNotches();
+        totalDurationOfCurrentLevel = totalDurationOfLevel;
+        SetRankNotches(ranksInLevel);
     }
 
-    private void SetRankNotches()
+    private void SetRankNotches(IList<Rank> ranksInLevel)
     {
-        if (rankNotches.Length < ranksToDisplay.Count)
+        if (rankNotches.Length < ranksInLevel.Count)
         {
-            throw new System.Exception("There are more ranks to display than there are notches available. Number of Ranks: " + ranksToDisplay.Count + " Number of notches: " + rankNotches.Length);
+            throw new System.Exception("There are more ranks to display than there are notches available. Number of Ranks: " + ranksInLevel.Count + " Number of notches: " + rankNotches.Length);
         }
 
         if (rankNotches.Length == 1)
@@ -41,15 +40,14 @@ public class RankTimer : MonoBehaviour
             return;
         }
 
-        float totalDuration = GetTotalDurationOfLevel();
         Rect worldSpaceRect = GetRectInScreenCoordinates(sliderFillArea);
         float totalRange = worldSpaceRect.yMax - worldSpaceRect.yMin;
         float runningTotalOfRange = 0.0f;
         Vector3 notchPosition;
-        for (int i = 0, count = ranksToDisplay.Count - 1; i < count; i++)
+        for (int i = 0, count = ranksInLevel.Count - 1; i < count; i++)
         {
-            runningTotalOfRange += ranksToDisplay[i].rankDurationInSeconds;
-            float percentageOfTotal = runningTotalOfRange / totalDuration;
+            runningTotalOfRange += ranksInLevel[i].rankDurationInSeconds;
+            float percentageOfTotal = runningTotalOfRange / totalDurationOfCurrentLevel;
             notchPosition = rankNotches[i].transform.position;
             notchPosition.y = worldSpaceRect.yMin + (totalRange * percentageOfTotal);
             rankNotches[i].transform.position = notchPosition;
@@ -57,18 +55,7 @@ public class RankTimer : MonoBehaviour
         }
     }
 
-    private float GetTotalDurationOfLevel()
-    {
-        float levelDuration = 0.0F;
-        for (int i = 0, count = ranksToDisplay.Count; i < count; i++)
-        {
-            levelDuration += ranksToDisplay[i].rankDurationInSeconds;
-        }
-
-        return levelDuration;
-    }
-
-    public Rect GetRectInScreenCoordinates(RectTransform uiElement)
+    private Rect GetRectInScreenCoordinates(RectTransform uiElement)
     {
         Vector3[] worldCorners = new Vector3[4];
         uiElement.GetWorldCorners(worldCorners);
@@ -79,25 +66,15 @@ public class RankTimer : MonoBehaviour
                       worldCorners[2].y - worldCorners[0].y);
     }
 
-    private void Update()
+    public void StartTimer(float startTime)
     {
-        if (isActive == false)
+        if (isActive == true)
         {
             return;
         }
 
-        slider.SetValueWithoutNotify(GetPercentageOfLevelComplete());
-        if (slider.value == slider.maxValue)
-        {
-            StopTimer();
-        }
-    }
-
-    private float GetPercentageOfLevelComplete()
-    {
-        float levelDuration = GetTotalDurationOfLevel();
-        float currentTime = Time.realtimeSinceStartup;
-        return (currentTime - levelStartTime) / levelDuration;
+        this.startTime = startTime;
+        isActive = true;
     }
 
     public void StopTimer()
@@ -105,9 +82,13 @@ public class RankTimer : MonoBehaviour
         isActive = false;
     }
 
-    public void StartTimer()
+    private void Update()
     {
-        levelStartTime = Time.realtimeSinceStartup;
-        isActive = true;
+        if (isActive == false)
+        {
+            return;
+        }
+
+        slider.value = (Time.realtimeSinceStartup - startTime) / totalDurationOfCurrentLevel;
     }
 }
