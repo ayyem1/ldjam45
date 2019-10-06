@@ -1,29 +1,61 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class RankTimer : MonoBehaviour
 {
+    public static Action OnNextRankReached;
+
     [SerializeField] private Slider slider = null;
     [SerializeField] private GameObject[] rankNotches = null;
     [SerializeField] private RectTransform sliderFillArea = null;
 
     private bool isActive = false;
-    private float startTime = 0.0F;
-    private float totalDurationOfCurrentLevel;
+    private float timeCompleted = 0.0F;
+    private float totalDurationOfCurrentLevel = 0.0F;
+    private IList<float> rankTimesForLevel = new List<float>();
+    private int currentRankTimeIndex = 0;
 
     public void ResetTimer(Rank rank)
     {
         IList<Rank> ranks = new List<Rank> { rank };
-        ResetTimer(ranks, rank.rankDurationInSeconds);
+        ResetTimer(ranks);
     }
 
-    public void ResetTimer(IList<Rank> ranksInLevel, float totalDurationOfLevel)
+    public void ResetTimer(IList<Rank> ranksInLevel)
     {
+        if (ranksInLevel.Count == 0)
+        {
+            throw new System.Exception("Reset rank timer with no ranks.");
+        }
+
         slider.SetValueWithoutNotify(0.0F);
         isActive = false;
-        totalDurationOfCurrentLevel = totalDurationOfLevel;
+        SetRankTimesForLevel(ranksInLevel);
+        DisableAllRankNotches();
         SetRankNotches(ranksInLevel);
+    }
+
+    private void SetRankTimesForLevel(IList<Rank> ranksInLevel)
+    {
+        float runningDuration = 0.0F;
+        for (int i = 0, count = ranksInLevel.Count; i < count; i++)
+        {
+            runningDuration += ranksInLevel[i].rankDurationInSeconds;
+            rankTimesForLevel.Add(runningDuration);
+        }
+
+        totalDurationOfCurrentLevel = runningDuration;
+        currentRankTimeIndex = 0;
+    }
+
+    private void DisableAllRankNotches()
+    {
+        for (int i = 0, count = rankNotches.Length; i < count;  i++)
+        {
+            rankNotches[i].SetActive(false);
+        }
     }
 
     private void SetRankNotches(IList<Rank> ranksInLevel)
@@ -66,20 +98,25 @@ public class RankTimer : MonoBehaviour
                       worldCorners[2].y - worldCorners[0].y);
     }
 
-    public void StartTimer(float startTime)
+    public void RestartTimer()
     {
         if (isActive == true)
         {
             return;
         }
 
-        this.startTime = startTime;
+        timeCompleted = 0.0F;
         isActive = true;
     }
 
-    public void StopTimer()
+    public void PauseTimer()
     {
         isActive = false;
+    }
+
+    public void ResumeTimer()
+    {
+        isActive = true;
     }
 
     private void Update()
@@ -89,6 +126,12 @@ public class RankTimer : MonoBehaviour
             return;
         }
 
-        slider.value = (Time.realtimeSinceStartup - startTime) / totalDurationOfCurrentLevel;
+        timeCompleted += Time.deltaTime;
+        slider.value = (timeCompleted) / totalDurationOfCurrentLevel;
+        if (timeCompleted >= rankTimesForLevel[currentRankTimeIndex])
+        {
+            OnNextRankReached?.Invoke();
+            currentRankTimeIndex = Math.Min(rankTimesForLevel.Count - 1, currentRankTimeIndex + 1);
+        }
     }
 }

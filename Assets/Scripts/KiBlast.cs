@@ -3,7 +3,6 @@
 public class KiBlast : MonoBehaviour
 {
     [SerializeField] private float speed = 0.0F;
-    [SerializeField] private float damage = 1.0F;
     private Camera mainCamera = null;
 
     private void Start()
