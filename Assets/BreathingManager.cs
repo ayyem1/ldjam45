@@ -15,6 +15,7 @@ public class BreathingManager : MonoBehaviour
     public AudioSource breathingSound;
 
     public Image feedbackImage;
+    public Image beatImage;
 
     public double calibrationValue;
 
@@ -28,20 +29,12 @@ public class BreathingManager : MonoBehaviour
         set { _rawInputTimestamp = value; }
     }
 
+    #region UnityFunctions
     public void Awake()
     {
         this.calibrationKeys = new List<double>();
         Metronome.OnBeat += this.PlayClickSound;
         StartCoroutine(Metronome.StartMetronome());
-    }
-
-    private void PlayClickSound()
-    {
-        this.clickSound.PlayScheduled(Metronome.nextBeatTime);
-
-        //this.breathingSound.PlayScheduled(Metronome.nextBeatTime);
-
-        this.StartCoroutine(this.DetectNoActionMiss());
     }
 
     public void Update()
@@ -50,9 +43,7 @@ public class BreathingManager : MonoBehaviour
         {
             this.adjustedInputTimestamp = AudioSettings.dspTime;
 
-            bool inTimeForBeat = ((this.adjustedInputTimestamp - Metronome.previousBeatTime) <= INPUT_GRACE_BUFFER) ? true : false;
-
-            if (inTimeForBeat)
+            if (this.IsMostRecentInputOnBeat() == true)
             {
                 this.BreathSuccess();
             }
@@ -66,31 +57,12 @@ public class BreathingManager : MonoBehaviour
         {
             double calibrationTimestamp = AudioSettings.dspTime;
 
-            this.calibrationKeys.Add(calibrationTimestamp - Metronome.previousBeatTime);
+            this.calibrationKeys.Add(calibrationTimestamp - Metronome.currentBeatTime);
 
             this.SetCalibrationAverage();
         }
     }
-
-    private void BreathSuccess()
-    {
-        feedbackImage.sprite = Resources.Load<Sprite>("good");
-
-        if (BreathingManager.OnHit != null)
-        {
-            BreathingManager.OnHit();
-        }
-    }
-
-    private void BreathFail()
-    {
-        feedbackImage.sprite = Resources.Load<Sprite>("bad");
-        Debug.LogError("BAD INPUT MISS");
-        if (BreathingManager.OnMiss != null)
-        {
-            BreathingManager.OnMiss();
-        }
-    }
+    #endregion
 
     private void SetCalibrationAverage()
     {
@@ -104,8 +76,96 @@ public class BreathingManager : MonoBehaviour
         this.calibrationValue = (runningTotal / this.calibrationKeys.Count);
     }
 
-    //Mark a miss if the player did not input anything and completely missed a beat
-    private IEnumerator DetectNoActionMiss()
+    #region InputBeatSyncChecks
+    //Checks the right grace window of the current beat for overshoots and the left grace window of the next beat for undershoots
+    //Used only to check if an input is a success or failure 
+    private bool IsMostRecentInputOnBeat()
+    {
+
+        bool undershootTest = ((Metronome.nextBeatTime - INPUT_GRACE_BUFFER) <= this.adjustedInputTimestamp);
+        bool overshootTest = ((Metronome.currentBeatTime + INPUT_GRACE_BUFFER) >= this.adjustedInputTimestamp);
+
+        return (undershootTest || overshootTest);
+    }
+
+    //Only checks the left and right grace window of the current beat
+    //Used only for detecting missed beats
+    private bool WasBeatMissed()
+    {
+        bool withinUndershootThreshold = (this.adjustedInputTimestamp >= (Metronome.currentBeatTime - INPUT_GRACE_BUFFER));
+        bool withinOvershootThreshold = (this.adjustedInputTimestamp <= (Metronome.currentBeatTime + INPUT_GRACE_BUFFER));
+
+        return (!withinUndershootThreshold || !withinOvershootThreshold);
+    }
+
+    #endregion
+
+    #region BreathCallbacks
+    private void BreathSuccess()
+    {
+        Debug.LogError("BREATH SUCCESS!");
+        feedbackImage.sprite = Resources.Load<Sprite>("good");
+
+        if (BreathingManager.OnHit != null)
+        {
+            BreathingManager.OnHit();
+        }
+    }
+
+    private void BreathFail()
+    {
+        feedbackImage.sprite = Resources.Load<Sprite>("bad");
+
+        Debug.LogError("FAIL");
+        if (BreathingManager.OnMiss != null)
+        {
+            BreathingManager.OnMiss();
+        }
+    }
+    #endregion
+
+    private void PlayClickSound()
+    {
+        this.beatImage.enabled = true;
+        this.StartCoroutine(this.BlinkImage());
+
+        this.clickSound.PlayScheduled(Metronome.currentBeatTime);
+        StartCoroutine(this.DetectBreathMiss());
+    }
+
+    #region Coroutines
+    private IEnumerator DetectBreathMiss()
+    {
+        double currentDspTime = Metronome.currentBeatTime;
+
+        //0.1 seconds is too fast to process additional inputs...
+        //So we wait a little longer before we check the proper grace window in WasBeatMissed()
+        //Yeah, I don't like it either.
+        double endOfGraceBuffer = Metronome.currentBeatTime + (2* INPUT_GRACE_BUFFER);  
+        
+        //First, wait grace period
+        while (currentDspTime < endOfGraceBuffer)
+        {
+            currentDspTime = AudioSettings.dspTime;
+            //Debug.LogError("Looping!  CurrentDspTime: " + currentDspTime + " endOfGraceBuffer: " + endOfGraceBuffer);
+            yield return 0;
+        }
+
+        //Then, check to see if the beat was missed.
+        //It's possible the player hit the beat within the grace window before and after the beat, so checks both sides
+        if (this.WasBeatMissed())
+        {
+            this.breathingSound.Play();
+
+            Debug.LogError("MISS");
+            if (BreathingManager.OnMiss != null)
+            {
+                BreathingManager.OnMiss();
+            }
+        }
+    }
+
+    private IEnumerator BlinkImage()
     {
         double beatTime = Metronome.nextBeatTime;
         double curTime = Metronome.nextBeatTime;
@@ -116,17 +176,7 @@ public class BreathingManager : MonoBehaviour
             yield return null;
         }
 
-        //Debug.LogError("Diff: " + Mathf.Abs((float)this.adjustedInputTimestamp - (float)beatTime));
-
-        if (Mathf.Abs((float)this.adjustedInputTimestamp - (float)beatTime) > Metronome.secondsBetweenBeats) 
-        {
-            Debug.LogError("NO ACTION MISS");
-            if (BreathingManager.OnMiss != null)
-            {
-                BreathingManager.OnMiss();
-            }
-        }
-
-            
+        this.beatImage.enabled = false;
     }
+    #endregion
 }

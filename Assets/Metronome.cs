@@ -6,10 +6,10 @@ public static class Metronome
     public delegate void MetronomeBeat();
     public static event MetronomeBeat OnBeat;
 
-    private static float beatsPerMinute = 60f;
+    private static float beatsPerMinute = 80f;
     public static float secondsBetweenBeats = 0f;
 
-    public static double previousBeatTime = 0;
+    public static double currentBeatTime = 0;
     public static double nextBeatTime = 0;
 
     public static bool metronomeStarted = false;
@@ -27,13 +27,13 @@ public static class Metronome
             double curTime = AudioSettings.dspTime;
             if (curTime >= nextBeatTime)
             {
+                Metronome.currentBeatTime = Metronome.nextBeatTime;
+                Metronome.nextBeatTime += Metronome.secondsBetweenBeats;
+
                 if (Metronome.OnBeat != null)
                 {
                     Metronome.OnBeat();
-                }
-
-                Metronome.previousBeatTime = Metronome.nextBeatTime;
-                Metronome.nextBeatTime += Metronome.secondsBetweenBeats;
+                }  
             }
 
             yield return null;
