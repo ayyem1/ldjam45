@@ -21,7 +21,7 @@ public class Temptation : MonoBehaviour
     {
         float test = Random.Range(-trajectoryAngleVariance, trajectoryAngleVariance);
 
-        this.moveSpeed = Random.Range(GameManager.Instance.difficulty.minTemptationSpeed, GameManager.Instance.difficulty.maxTemptationSpeed);
+        this.moveSpeed = Random.Range(GameManager.Instance.Difficulty.minTemptationSpeed, GameManager.Instance.Difficulty.maxTemptationSpeed);
         this.trajectoryOffsetAngle = Mathf.Deg2Rad * test;
         this.moveTrajectory = (GameManager.Instance.finalPlayerPosition - this.transform.position).normalized;
         PolarCoordinate moveDirectionPolar = new PolarCoordinate(1.0f, this.moveTrajectory);

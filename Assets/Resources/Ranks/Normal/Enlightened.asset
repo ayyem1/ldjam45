@@ -16,3 +16,4 @@ MonoBehaviour:
   rankName: Enlightened
   nextRank: {fileID: 11400000, guid: 53608bd68482e154fa0a9c394601fd40, type: 2}
   gameMode: 0
+  difficulty: {fileID: 11400000, guid: 7dfdc6a383ae7934392048a88dea6b7c, type: 2}

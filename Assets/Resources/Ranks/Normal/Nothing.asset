@@ -16,3 +16,4 @@ MonoBehaviour:
   rankName: Nothing
   nextRank: {fileID: 11400000, guid: e554c0d50a1625d469ac29f0ccf500a6, type: 2}
   gameMode: 0
+  difficulty: {fileID: 11400000, guid: 7cefca307efb2a1428bd172db5755f4d, type: 2}

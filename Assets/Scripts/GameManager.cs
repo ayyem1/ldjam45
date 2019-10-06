@@ -31,7 +31,8 @@ public sealed class GameManager : MonoBehaviour
         }
     }
 
-    [SerializeField] public Difficulty difficulty = null;
+    public Difficulty Difficulty { get; private set; }
+
     [SerializeField] public Sentry sentry = null;
     public uint playerHealth;
     public Vector3 finalPlayerPosition;
@@ -58,12 +59,12 @@ public sealed class GameManager : MonoBehaviour
 
     private void OnHit()
     {
-        sentry.AddAmmo(difficulty.ammoGrantForHit);
+        sentry.AddAmmo(Difficulty.ammoGrantForHit);
     }
 
     private void OnFail()
     {
-        sentry.RemoveAmmo(difficulty.ammoReductionForMiss);
+        sentry.RemoveAmmo(Difficulty.ammoReductionForMiss);
     }
 
     private void OnNextRankReached()
@@ -77,11 +78,8 @@ public sealed class GameManager : MonoBehaviour
         }
         else
         {
-            currentRank = currentRank.nextRank;
+            SetNextRankInLevel(currentRank.nextRank);
         }
-
-        // TODO: Replace GameManager difficulty with rank's difficulty.
-        //difficulty = currentRank.difficulty;
     }
 
     private void Start()
@@ -101,6 +99,14 @@ public sealed class GameManager : MonoBehaviour
         {
             rankTimer.ResetTimer(currentRank);
         }
+
+        Difficulty = currentRank.difficulty;
+    }
+
+    private void SetNextRankInLevel(Rank newRank)
+    {
+        currentRank = newRank ?? currentRank;
+        Difficulty = currentRank.difficulty;
     }
 
     private void Update()
