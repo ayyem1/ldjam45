@@ -6,7 +6,7 @@ public class RankTimer : MonoBehaviour
 {
     [SerializeField] private Slider slider = null;
     [SerializeField] private GameObject[] rankNotches = null;
-    [SerializeField] private RectTransform sliderFillArea;
+    [SerializeField] private RectTransform sliderFillArea = null;
 
     private bool isActive = false;
     private float levelStartTime = 0.0F;
