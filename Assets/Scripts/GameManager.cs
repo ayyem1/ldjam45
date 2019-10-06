@@ -11,7 +11,8 @@ public sealed class GameManager : MonoBehaviour
     /// ranking up.
     /// </summary>
     public static Action<bool> OnRankReached;
-    public static Action OnGameStarted;
+    public static Action OnLevelStarted;
+    public static Action OnLevelContinued;
 
     public static GameManager Instance
     {
@@ -64,10 +65,11 @@ public sealed class GameManager : MonoBehaviour
 
     private void Start()
     {
-        ChangeRank(initialRank);
+        // TODO: Pull from player storage here.
+        SetFirstRankInLevel(initialRank);
     }
 
-    public void ChangeRank(Rank newRank)
+    private void SetFirstRankInLevel(Rank newRank)
     {
         currentRank = newRank ?? currentRank;
         if (currentRank.gameMode == GameMode.Normal)
@@ -95,7 +97,7 @@ public sealed class GameManager : MonoBehaviour
         // TODO: Remove this debug code.
         if (Input.GetKeyDown(KeyCode.S) && isGamePausedForBreadth == true)
         {
-            StartGame();
+            StartNewLevel();
         }
 
         if (isGamePausedForBreadth == false)
@@ -107,17 +109,18 @@ public sealed class GameManager : MonoBehaviour
                 OnRankReached?.Invoke(isLevelComplete);
                 if (isLevelComplete)
                 {
-                    ChangeRank(currentRank.nextRank);
+                    SetFirstRankInLevel(currentRank.nextRank);
                 } else
                 {
-                    // TODO: Clean this up.
                     currentRank = currentRank.nextRank;
                 }
+                // TODO: Replace GameManager difficulty with rank's difficulty.
+                //difficulty = currentRank.difficulty;
             }
         }
     }
 
-    private void StartGame()
+    private void StartNewLevel()
     {
         if (isGamePausedForBreadth == false)
         {
@@ -125,9 +128,10 @@ public sealed class GameManager : MonoBehaviour
         }
 
         levelStartTime = Time.realtimeSinceStartup;
+        Debug.Log("Starting new level with time:" + levelStartTime);
         rankTimer.StartTimer(levelStartTime);
         isGamePausedForBreadth = false;
-        OnGameStarted?.Invoke();
+        OnLevelStarted?.Invoke();
     }
 
     public void PauseGameForBreadth()
@@ -138,6 +142,7 @@ public sealed class GameManager : MonoBehaviour
         }
 
         levelPauseTime = Time.realtimeSinceStartup;
+        Debug.Log("Pausing game for breath. levelStartTime: " + levelStartTime + " levelPauseTime: " + levelPauseTime);
         rankTimer.StopTimer();
         isGamePausedForBreadth = true;
         StartCoroutine(PauseForBreath());
@@ -146,10 +151,17 @@ public sealed class GameManager : MonoBehaviour
     private IEnumerator PauseForBreath()
     {
         yield return new WaitForSeconds(breathPauseInSeconds);
-        ContinueGameFromPauseForBreadth();
+        if (currentRank.gameMode == GameMode.Normal)
+        {
+            ContinueLevelFromPauseForBreadth();
+        }
+        else
+        {
+            StartNewLevel();
+        }
     }
 
-    public void ContinueGameFromPauseForBreadth()
+    public void ContinueLevelFromPauseForBreadth()
     {
         if (isGamePausedForBreadth == false)
         {
@@ -157,6 +169,7 @@ public sealed class GameManager : MonoBehaviour
         }
 
         float diff = Time.realtimeSinceStartup - levelPauseTime;
+        Debug.Log("Continuing Level. levelStartTime: " + levelStartTime + " levelPauseTime: " + levelPauseTime + " diff: " + diff + " newStartTime: " + (levelStartTime + diff));
         levelStartTime += diff;
         levelPauseTime = 0.0F;
         rankTimer.StartTimer(levelStartTime);

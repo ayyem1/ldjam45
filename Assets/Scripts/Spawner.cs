@@ -17,7 +17,8 @@ public class Spawner : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.OnGameStarted += StartSpawner;
+        GameManager.OnLevelStarted += StartSpawner;
+        GameManager.OnLevelContinued += StartSpawner;
         GameManager.OnRankReached += StopSpawner;
     }
 
@@ -78,7 +79,7 @@ public class Spawner : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameManager.OnGameStarted -= StartSpawner;
+        GameManager.OnLevelStarted -= StartSpawner;
         GameManager.OnRankReached -= StopSpawner;
     }
 }
