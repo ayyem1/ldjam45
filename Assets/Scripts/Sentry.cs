@@ -30,11 +30,16 @@ public class Sentry : MonoBehaviour
             }
         }
 
+        Vector3 toObjectVector = transform.position - mainCamera.transform.position;
+        Vector3 linearDistanceVector = Vector3.Project(toObjectVector, Camera.main.transform.forward);
+
         Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = transform.position.z - mainCamera.transform.position.z;
+        mousePosition.z = linearDistanceVector.magnitude;
         mousePosition = mainCamera.ScreenToWorldPoint(mousePosition);
 
         Vector3 vectorToMouse = mousePosition - sentryCenter;
+        // Ignore z for the arc math.
+        vectorToMouse.z = 0;
         // Clamp the sentry arc to the top half of the circle.
         // This translates to all y coordinates greater than
         // the center
@@ -50,10 +55,12 @@ public class Sentry : MonoBehaviour
         float normalizedY = vectorToMouse.y / magnitude;
         vectorToMouse.x = normalizedX * sentryRadius;
         vectorToMouse.y = normalizedY * sentryRadius;
+
         Quaternion rotation = Quaternion.LookRotation(transform.forward, vectorToMouse);
         vectorToMouse.x += sentryCenter.x;
         vectorToMouse.y += sentryCenter.y;
         vectorToMouse.z += sentryCenter.z;
+
         transform.SetPositionAndRotation(vectorToMouse, rotation);
     }
 
@@ -91,5 +98,15 @@ public class Sentry : MonoBehaviour
         {
             ammoAmount -= amountToRemove;
         }
+    }
+
+    private void TestFunction()
+    {
+        Vector3 toObjectVector = transform.position - mainCamera.transform.position;
+        Vector3 linearDistanceVector = Vector3.Project(toObjectVector, Camera.main.transform.forward);
+        float actualDistance = linearDistanceVector.magnitude;
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition.z = actualDistance;
+        transform.position = Camera.main.ScreenToWorldPoint(mousePosition);
     }
 }
