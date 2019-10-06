@@ -35,12 +35,41 @@ public sealed class GameManager : MonoBehaviour
     [SerializeField] public Sentry sentry = null;
     [SerializeField] public Rank currentRank = null;
 
+    private bool isGameActive = false;
+
     static GameManager() { }
     private GameManager() { }
 
+    private void Awake()
+    {
+        BreathingManager.OnHit += OnHit;
+        BreathingManager.OnFail += OnFail;
+    }
+
+    private void Start()
+    {
+        ResetGame();
+    }
+
+    public void ResetGame()
+    {
+        rankTimer.ResetTimer(GetAllRanksInNormalMode());
+    }
+
+
+    private void OnHit()
+    {
+        sentry.AddAmmo(difficulty.ammoGrantForHit);
+    }
+
+    private void OnFail()
+    {
+        sentry.RemoveAmmo(difficulty.ammoReductionForMiss);
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S) && isGameActive == false)
         {
             StartGame();
         }
@@ -49,8 +78,20 @@ public sealed class GameManager : MonoBehaviour
     public void StartGame()
     {
         // TODO: Need to extend this for high score mode.
-        rankTimer.ResetTimer(GetAllRanksInNormalMode());
         rankTimer.StartTimer();
+        isGameActive = true;
+    }
+
+    public void StopGame()
+    {
+        rankTimer.StopTimer();
+        isGameActive = false;
+    }
+
+    private void OnDestroy()
+    {
+        BreathingManager.OnHit -= OnHit;
+        BreathingManager.OnFail -= OnFail;
     }
 
     private IList<Rank> GetAllRanksInNormalMode()

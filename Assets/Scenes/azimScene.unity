@@ -758,7 +758,7 @@ MonoBehaviour:
   sentryRadius: 5
   sentryCenter: {x: 0, y: -2, z: 5}
   sentryCooldownInSeconds: 0.1
-  ammoAmount: 10
+  ammoAmount: 0
   launchPoint: {fileID: 1307780262}
   kiBlastPrefabToSpawn: {fileID: 2976131355030668757, guid: 08942bdc4de781a43b03269f187ef3e7,
     type: 3}

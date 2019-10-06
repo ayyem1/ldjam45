@@ -21,9 +21,6 @@ public class BreathingManager : MonoBehaviour
 
     private double _rawInputTimestamp = 0;
 
-    private uint ammoAddedPerBreathSuccess = 5;
-    private uint ammoRemovedPerBreathFail = 5;
-
     private double adjustedInputTimestamp
     {
         get { return _rawInputTimestamp - this.calibrationValue; }
@@ -105,7 +102,6 @@ public class BreathingManager : MonoBehaviour
     private void BreathSuccess()
     {
         Debug.LogError("BREATH SUCCESS!");
-        GameManager.Instance.sentry.AddAmmo(this.ammoAddedPerBreathSuccess);
         if (BreathingManager.OnHit != null)
         {
             BreathingManager.OnHit();
@@ -115,7 +111,6 @@ public class BreathingManager : MonoBehaviour
     private void BreathFail()
     {
         Debug.LogError("BREATH FAIL");
-        GameManager.Instance.sentry.RemoveAmmo(this.ammoRemovedPerBreathFail);
         if (BreathingManager.OnFail != null)
         {
             BreathingManager.OnFail();

@@ -13,18 +13,18 @@ public class RankTimer : MonoBehaviour
 
     private IList<Rank> ranksToDisplay;
 
+    public void ResetTimer(Rank rankToDisplay)
+    {
+        IList<Rank> ranks = new List<Rank> { rankToDisplay };
+        ResetTimer(ranks);
+    }
+
     public void ResetTimer(IList<Rank> ranksToDisplay)
     {
         this.ranksToDisplay = ranksToDisplay;
         slider.SetValueWithoutNotify(0.0F);
         isActive = false;
         SetRankNotches();
-    }
-
-    public void ResetTimer(Rank rankToDisplay)
-    {
-        IList<Rank> ranks = new List<Rank> { rankToDisplay };
-        ResetTimer(ranks);
     }
 
     private void SetRankNotches()
@@ -57,6 +57,17 @@ public class RankTimer : MonoBehaviour
         }
     }
 
+    private float GetTotalDurationOfLevel()
+    {
+        float levelDuration = 0.0F;
+        for (int i = 0, count = ranksToDisplay.Count; i < count; i++)
+        {
+            levelDuration += ranksToDisplay[i].rankDurationInSeconds;
+        }
+
+        return levelDuration;
+    }
+
     public Rect GetRectInScreenCoordinates(RectTransform uiElement)
     {
         Vector3[] worldCorners = new Vector3[4];
@@ -87,17 +98,6 @@ public class RankTimer : MonoBehaviour
         float levelDuration = GetTotalDurationOfLevel();
         float currentTime = Time.realtimeSinceStartup;
         return (currentTime - levelStartTime) / levelDuration;
-    }
-
-    private float GetTotalDurationOfLevel()
-    {
-        float levelDuration = 0.0F;
-        for (int i = 0, count = ranksToDisplay.Count; i < count; i++)
-        {
-            levelDuration += ranksToDisplay[i].rankDurationInSeconds;
-        }
-
-        return levelDuration;
     }
 
     public void StopTimer()
