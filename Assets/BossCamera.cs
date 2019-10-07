@@ -19,6 +19,12 @@ public class BossCamera : MonoBehaviour
         nonBossZ = mainCamera.transform.position.z;
     }
 
+    private void OnDestroy()
+    {
+        GameManager.OnBossSpawned -= OnBossSpawned;
+        Temptation.OnBossDied -= ResetZValue;
+    }
+
     private void OnBossSpawned()
     {
         StartCoroutine(MoveCameraBack());

@@ -20,9 +20,19 @@ public class Temptation : MonoBehaviour
 
     private void Awake()
     {
-        RankTimer.OnTimeInRankCompleted += DestroyTemptation;
-        GameManager.OnGameOver += DestroyTemptation;
+        RankTimer.OnTimeInRankCompleted += OnTimeInRankCompleted;
+        GameManager.OnGameOver += OnGameOver;
         this.GetRandomMoveSpeedAndTrajectory();
+    }
+
+    private void OnTimeInRankCompleted()
+    {
+        DestroyTemptation();
+    }
+
+    private void OnGameOver(bool wasGameWon)
+    {
+        DestroyTemptation();
     }
 
     private void Start()
@@ -34,8 +44,13 @@ public class Temptation : MonoBehaviour
 
     private void OnDestroy()
     {
-        RankTimer.OnTimeInRankCompleted -= DestroyTemptation;
-        GameManager.OnGameOver -= DestroyTemptation;
+        UnsubscribeFromEvents();
+    }
+
+    private void UnsubscribeFromEvents()
+    {
+        RankTimer.OnTimeInRankCompleted -= OnTimeInRankCompleted;
+        GameManager.OnGameOver -= OnGameOver;
     }
 
     private void GetRandomMoveSpeedAndTrajectory()
@@ -58,11 +73,16 @@ public class Temptation : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
-        bool onScreen = screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
-        if (onScreen == false || hitPoints <= 0)
+        //Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
+        //bool onScreen = screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
+        //if (onScreen == false || hitPoints <= 0)
+        //{
+        //    return;
+        //}
+
+        if (hitPoints <= 0)
         {
-            return;
+            return;     
         }
 
         if (other.tag == "Player")
@@ -94,6 +114,7 @@ public class Temptation : MonoBehaviour
     private void DestroyTemptation()
     {
         this.moveSpeed = 0;
+        UnsubscribeFromEvents();
         if (isBoss)
         {
             OnBossDied();

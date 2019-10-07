@@ -8,7 +8,7 @@ public sealed class GameManager : MonoBehaviour
     public static Action OnLevelStarted;
     public static Action OnLevelContinued;
     public static Action OnGameStarted;
-    public static Action OnGameOver;
+    public static Action<bool> OnGameOver;
     public static Action PlayerDamaged;
     public static Action<Rank> OnRankChanged;
     public static Action OnBossSpawned;
@@ -164,7 +164,7 @@ public sealed class GameManager : MonoBehaviour
         isGameActive = false;
         rankTimer.PauseTimer();
         rankTimer.slider.value = rankTimer.slider.maxValue;
-        OnGameOver?.Invoke();
+        OnGameOver?.Invoke(true);
     }
 
     private void Start()
@@ -238,7 +238,7 @@ public sealed class GameManager : MonoBehaviour
             {
                 rankTimer.PauseTimer();
                 isGameActive = false;
-                OnGameOver?.Invoke();
+                OnGameOver?.Invoke(false);
             }
         }
 
