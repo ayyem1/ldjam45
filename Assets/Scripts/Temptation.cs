@@ -14,6 +14,7 @@ public class Temptation : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("Transform on Awake: " + transform.position);
         this.GetRandomMoveSpeedAndTrajectory();   
     }
 
@@ -24,6 +25,7 @@ public class Temptation : MonoBehaviour
         this.moveSpeed = Random.Range(GameManager.Instance.Difficulty.minTemptationSpeed, GameManager.Instance.Difficulty.maxTemptationSpeed);
         //this.trajectoryOffsetAngle = test;
         this.moveTrajectory = (GameManager.Instance.finalPlayerPosition - this.transform.position).normalized;
+        this.moveTrajectory.z = 0.0F;
        // PolarCoordinate moveDirectionPolar = new PolarCoordinate(1.0f, this.moveTrajectory);
         //moveDirectionPolar.angleInDegrees += trajectoryOffsetAngle;
         //this.moveTrajectory = moveDirectionPolar.PolarToCartesian();
@@ -31,7 +33,14 @@ public class Temptation : MonoBehaviour
 
     void FixedUpdate()
     {
-        this.gameObject.transform.Translate(this.moveTrajectory * (this.moveSpeed * Time.fixedDeltaTime));    
+        //this.gameObject.transform.Translate(this.moveTrajectory * (this.moveSpeed * Time.fixedDeltaTime));
+        Vector3 newPosition = transform.position;
+        Vector3 moveAmount = moveTrajectory * moveSpeed * Time.fixedDeltaTime;
+        newPosition.x += moveAmount.x;
+        newPosition.y += moveAmount.y;
+        //newPosition.z += moveAmount.z;
+        transform.position = newPosition;
+        Debug.Log("Move Trajectory: " + moveTrajectory + " Position: " + transform.position);
     }
 
     private void OnTriggerEnter(Collider other)
