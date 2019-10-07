@@ -10,6 +10,7 @@ public sealed class GameManager : MonoBehaviour
     public static Action OnGameStarted;
     public static Action OnGameOver;
     public static Action PlayerDamaged;
+    public static Action<Rank> OnRankChanged;
 
     public static GameManager Instance
     {
@@ -35,10 +36,10 @@ public sealed class GameManager : MonoBehaviour
     }
 
     public Difficulty Difficulty { get; private set; }
+    public Rank CurrentRank { get; private set; }
 
     [SerializeField] public Sentry sentry = null;
 
-    public Rank currentRank;
     public Vector3 finalPlayerPosition;
     public uint maximumAmmoCount = 100;
     public bool isGameActive = false;
@@ -60,7 +61,7 @@ public sealed class GameManager : MonoBehaviour
     {
         BreathingManager.OnHit += OnHit;
         BreathingManager.OnFail += OnFail;
-        RankTimer.OnNextRankReached += OnNextRankReached;
+        RankTimer.OnTimeInRankCompleted += OnNextRankReached;
     }
 
     private void OnHit()
@@ -92,36 +93,46 @@ public sealed class GameManager : MonoBehaviour
 
         rankTimer.PauseTimer();
         PauseGameToBreathe();
-        bool isLevelComplete = currentRank.nextRank.gameMode == GameMode.HighScore;
+        bool isLevelComplete = CurrentRank.nextRank.gameMode == GameMode.HighScore;
         if (isLevelComplete)
         {
-            SetFirstRankInLevel(currentRank.nextRank);
+            SetFirstRankInLevel(CurrentRank.nextRank, false);
         }
         else
         {
-            SetNextRankInLevel(currentRank.nextRank);
+            SetNextRankInLevel(CurrentRank.nextRank, false);
         }
     }
 
-    private void SetFirstRankInLevel(Rank newRank)
+    private void SetFirstRankInLevel(Rank newRank, bool isFirstLoadedRank)
     {
-        currentRank = newRank ?? currentRank;
-        if (currentRank.gameMode == GameMode.Normal)
+        CurrentRank = newRank ?? CurrentRank;
+        if (isFirstLoadedRank == false && newRank != null)
+        {
+            OnRankChanged?.Invoke(CurrentRank);
+        }
+
+        if (CurrentRank.gameMode == GameMode.Normal)
         {
             rankTimer.ResetTimer(GetAllRanksForNormalLevel());
         }
         else
         {
-            rankTimer.ResetTimer(currentRank);
+            rankTimer.ResetTimer(CurrentRank);
         }
 
-        Difficulty = currentRank.difficulty;
+        Difficulty = CurrentRank.difficulty;
     }
 
-    private void SetNextRankInLevel(Rank newRank)
+    private void SetNextRankInLevel(Rank newRank, bool isFirstLoadedRank)
     {
-        currentRank = newRank ?? currentRank;
-        Difficulty = currentRank.difficulty;
+        CurrentRank = newRank ?? CurrentRank;
+        if (isFirstLoadedRank == false && newRank != null)
+        {
+            OnRankChanged?.Invoke(CurrentRank);
+        }
+
+        Difficulty = CurrentRank.difficulty;
     }
 
     private void Start()
@@ -135,7 +146,7 @@ public sealed class GameManager : MonoBehaviour
     {
         isGameActive = true;
         currentPlayerHealth = startingPlayerHealth;
-        SetFirstRankInLevel(initialRank);
+        SetFirstRankInLevel(initialRank, true);
         OnGameStarted?.Invoke();
         PauseGameToBreathe();
     }
@@ -144,7 +155,7 @@ public sealed class GameManager : MonoBehaviour
     {
         isGameActive = true;
         currentPlayerHealth = startingPlayerHealth;
-        SetFirstRankInLevel(FindFirstHighScoreLevel());
+        SetFirstRankInLevel(FindFirstHighScoreLevel(), true);
         OnGameStarted?.Invoke();
         PauseToBreathe();
     }
@@ -214,7 +225,7 @@ public sealed class GameManager : MonoBehaviour
     private IEnumerator PauseToBreathe()
     {
         yield return new WaitForSeconds(breathPauseInSeconds);
-        if (currentRank.gameMode == GameMode.Normal)
+        if (CurrentRank.gameMode == GameMode.Normal)
         {
             ContinueLevelFromPauseForBreath();
         }
@@ -236,18 +247,18 @@ public sealed class GameManager : MonoBehaviour
     {
         BreathingManager.OnHit -= OnHit;
         BreathingManager.OnFail -= OnFail;
-        RankTimer.OnNextRankReached -= OnNextRankReached;
+        RankTimer.OnTimeInRankCompleted -= OnNextRankReached;
     }
 
     private IList<Rank> GetAllRanksForNormalLevel()
     {
-        if (currentRank == null || currentRank.gameMode != GameMode.Normal)
+        if (CurrentRank == null || CurrentRank.gameMode != GameMode.Normal)
         {
             throw new System.Exception("Attempted to get ranks for non-normal game mode. High score game mode only has one rank per level.");
         }
 
         IList<Rank> ranks = new List<Rank>();
-        Rank rank = currentRank;
+        Rank rank = CurrentRank;
         do
         {
             ranks.Add(rank);

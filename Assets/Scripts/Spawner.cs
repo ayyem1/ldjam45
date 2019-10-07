@@ -20,7 +20,7 @@ public class Spawner : MonoBehaviour
         GameManager.OnLevelStarted += StartSpawner;
         GameManager.OnLevelContinued += StartSpawner;
         GameManager.OnGameOver += StopSpawner;
-        RankTimer.OnNextRankReached += StopSpawner;
+        RankTimer.OnTimeInRankCompleted += StopSpawner;
     }
 
     public void StartSpawner()
@@ -83,7 +83,7 @@ public class Spawner : MonoBehaviour
         GameManager.OnLevelStarted -= StartSpawner;
         GameManager.OnLevelContinued -= StartSpawner;
         GameManager.OnGameOver -= StopSpawner;
-        RankTimer.OnNextRankReached -= StopSpawner;
+        RankTimer.OnTimeInRankCompleted -= StopSpawner;
     }
 }
 

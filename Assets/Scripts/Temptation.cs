@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using PolarCoordinates;
+﻿using UnityEngine;
 
 public class Temptation : MonoBehaviour
 {
@@ -12,9 +9,16 @@ public class Temptation : MonoBehaviour
     public float trajectoryAngleVariance = 10f;
     private float trajectoryOffsetAngle;
 
+    private Camera mainCamera = null;
+    [SerializeField] private GameObject particlesToShowOnDestroy = null;
+
     private void Awake()
     {
         this.GetRandomMoveSpeedAndTrajectory();   
+    }
+    private void Start()
+    {
+        mainCamera = Camera.main;
     }
 
     private void GetRandomMoveSpeedAndTrajectory()
@@ -43,6 +47,13 @@ public class Temptation : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
+        bool onScreen = screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
+        if (onScreen == false)
+        {
+            return;
+        }
+
         if (other.tag == "Player")
         {
             this.DamagePlayer();
@@ -71,7 +82,8 @@ public class Temptation : MonoBehaviour
 
     private void DestroyTemptation()
     {
-        //Do temptation destroy vfx/sounds here  
+        //Do temptation destroy vfx/sounds here
+        particlesToShowOnDestroy.SetActive(true);
         Destroy(this.gameObject);
     }
 }

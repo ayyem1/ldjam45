@@ -125,6 +125,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitPoints: 5
   trajectoryAngleVariance: 3
+  particlesToShowOnDestroy: {fileID: 347361772104926015, guid: da74c515f459b954fa282907d06e6a42,
+    type: 3}
 --- !u!136 &-6739569007959015763
 CapsuleCollider:
   m_ObjectHideFlags: 0
