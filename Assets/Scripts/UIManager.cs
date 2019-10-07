@@ -13,9 +13,9 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))//Input.GetAxis("Cancel") > 0)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (pauseMenuItems2.activeInHierarchy || pauseMenuItems3.activeInHierarchy)
+            if (IsGamePaused())
             {
                 ContinueGame();
             }
@@ -28,13 +28,26 @@ public class UIManager : MonoBehaviour
 
     private void ContinueGame()
     {
+        if (IsGamePaused() == false)
+        {
+            return;
+        }
+
         pauseMenuItems2.SetActive(false);
         pauseMenuItems3.SetActive(false);
+
+        GameManager.Instance.isGameActive = true;
         Time.timeScale = 1.0F;
+        Metronome.ToggleMetronomePause();
     }
 
     private void PauseGame()
     {
+        if (IsGamePaused() == true)
+        {
+            return;
+        }
+
         if (GameManager.Instance.isGameActive)
         {
             pauseMenuItems3.SetActive(true);
@@ -44,7 +57,14 @@ public class UIManager : MonoBehaviour
             pauseMenuItems2.SetActive(true);
         }
 
+        GameManager.Instance.isGameActive = false;
         Time.timeScale = 0.0F;
+        Metronome.ToggleMetronomePause();
+    }
+
+    private bool IsGamePaused()
+    {
+        return pauseMenuItems2.activeInHierarchy || pauseMenuItems3.activeInHierarchy;
     }
 
     private void OnDestroy()
