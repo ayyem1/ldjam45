@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject pauseMenuItems3 = null;
     [SerializeField] private Text announcementText = null;
     [SerializeField] private Text announcementSubText = null;
+    [SerializeField] private Text currentRankText = null;
     [SerializeField] private GameObject ammoBar = null;
     [SerializeField] public GameObject sentryArc;
     public Image titleImage;
@@ -44,6 +45,8 @@ public class UIManager : MonoBehaviour
     {
         announcementText.text = RankUpAnnouncementText;
         announcementSubText.text = newRank.rankName;
+
+        currentRankText.text = "Rank:\n" + newRank.rankName;
 
         StartCoroutine(DisplayAnnouncement());
     }
