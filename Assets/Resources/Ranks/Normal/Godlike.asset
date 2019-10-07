@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ddefd8e0559b7e42a8b775d359b23a4, type: 3}
   m_Name: Godlike
   m_EditorClassIdentifier: 
-  rankDurationInSeconds: 20
+  rankDurationInSeconds: 30
   rankName: Godlike
   nextRank: {fileID: 11400000, guid: 63c2cbe205072ac4d8cf4f1a65ae89d1, type: 2}
   gameMode: 0

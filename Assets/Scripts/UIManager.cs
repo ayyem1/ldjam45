@@ -173,6 +173,8 @@ public class UIManager : MonoBehaviour
         {
             GameManager.Instance.StartGameFromHighScore();
         }
+
+        currentRankText.text = "Rank:\n" + rank.rankName;
     }
 
     public void ToMainMenu()

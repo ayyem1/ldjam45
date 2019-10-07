@@ -22,4 +22,4 @@ MonoBehaviour:
   maxTemptationSpeed: 5
   ammoReductionForMiss: 7
   ammoGrantForHit: 7
-  breathBPM: 70
+  breathBPM: 60

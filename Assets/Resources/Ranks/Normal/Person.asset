@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ddefd8e0559b7e42a8b775d359b23a4, type: 3}
   m_Name: Person
   m_EditorClassIdentifier: 
-  rankDurationInSeconds: 20
+  rankDurationInSeconds: 30
   rankName: Person
   nextRank: {fileID: 11400000, guid: 9d9fc7fc17eb7d9498a0c87fee33a1c4, type: 2}
   gameMode: 0
