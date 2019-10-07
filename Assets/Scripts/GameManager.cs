@@ -7,6 +7,7 @@ public sealed class GameManager : MonoBehaviour
 {
     public static Action OnLevelStarted;
     public static Action OnLevelContinued;
+    public static Action OnGameOver;
 
     public static GameManager Instance
     {
@@ -34,7 +35,7 @@ public sealed class GameManager : MonoBehaviour
     public Difficulty Difficulty { get; private set; }
 
     [SerializeField] public Sentry sentry = null;
-    public uint playerHealth;
+    public int currentPlayerHealth;
     public Vector3 finalPlayerPosition;
 
     public uint maximumAmmoCount = 100;
@@ -44,8 +45,9 @@ public sealed class GameManager : MonoBehaviour
     [SerializeField] private RankTimer rankTimer = null;
     [SerializeField] private Rank initialRank = null;
     [SerializeField] private float breathPauseInSeconds = 10.0F;
+    [SerializeField] private int startingPlayerHealth = 3;
     private Rank currentRank;
-    private bool isGamePausedForBreadth = true;
+    private bool isGameActive = false;
 
     static GameManager() { }
     private GameManager() { }
@@ -59,18 +61,33 @@ public sealed class GameManager : MonoBehaviour
 
     private void OnHit()
     {
+        if (isGameActive == false)
+        {
+            return;
+        }
+
         sentry.AddAmmo(Difficulty.ammoGrantForHit);
     }
 
     private void OnFail()
     {
+        if (isGameActive == false)
+        {
+            return;
+        }
+
         sentry.RemoveAmmo(Difficulty.ammoReductionForMiss);
     }
 
     private void OnNextRankReached()
     {
+        if (isGameActive == false)
+        {
+            return;
+        }
+
         rankTimer.PauseTimer();
-        PauseGameForBreadth();
+        PauseGameToBreathe();
         bool isLevelComplete = currentRank.nextRank.gameMode == GameMode.HighScore;
         if (isLevelComplete)
         {
@@ -80,12 +97,6 @@ public sealed class GameManager : MonoBehaviour
         {
             SetNextRankInLevel(currentRank.nextRank);
         }
-    }
-
-    private void Start()
-    {
-        // TODO: Pull from player storage here.
-        SetFirstRankInLevel(initialRank);
     }
 
     private void SetFirstRankInLevel(Rank newRank)
@@ -109,60 +120,82 @@ public sealed class GameManager : MonoBehaviour
         Difficulty = currentRank.difficulty;
     }
 
-    private void Update()
+    private void Start()
     {
-        // TODO: Remove this debug code.
-        if (Input.GetKeyDown(KeyCode.S) && isGamePausedForBreadth == true)
-        {
-            StartNewLevel();
-        }
+        // TODO: Pull from player storage here.
+        StartGameFromNormal();
     }
 
-    private void StartNewLevel()
+    public void StartGameFromNormal()
     {
-        if (isGamePausedForBreadth == false)
+        isGameActive = true;
+        currentPlayerHealth = startingPlayerHealth;
+        SetFirstRankInLevel(initialRank);
+        PauseGameToBreathe();
+    }
+
+    public void StartGameFromHighScore()
+    {
+        isGameActive = true;
+        currentPlayerHealth = startingPlayerHealth;
+        SetFirstRankInLevel(FindFirstHighScoreLevel());
+        PauseToBreathe();
+    }
+
+    private Rank FindFirstHighScoreLevel()
+    {
+        Rank rank = initialRank;
+        while (rank != null || rank.gameMode != GameMode.HighScore)
+        {
+            rank = rank.nextRank;
+        }
+
+        return rank;
+    }
+
+    private void Update()
+    {
+        if (isGameActive == false)
         {
             return;
         }
 
-        isGamePausedForBreadth = false;
+        if (currentPlayerHealth <= 0)
+        {
+            Debug.Log("GAME OVER");
+            rankTimer.PauseTimer();
+            isGameActive = false;
+            OnGameOver?.Invoke();
+        }
+    }
+
+    private void StartLevel()
+    {
         rankTimer.RestartTimer();
         OnLevelStarted?.Invoke();
     }
 
-    public void PauseGameForBreadth()
+    private void PauseGameToBreathe()
     {
-        if (isGamePausedForBreadth == true)
-        {
-            return;
-        }
-
-        isGamePausedForBreadth = true;
-        StartCoroutine(PauseForBreath());
+        StartCoroutine(PauseToBreathe());
     }
     
-    private IEnumerator PauseForBreath()
+    private IEnumerator PauseToBreathe()
     {
         yield return new WaitForSeconds(breathPauseInSeconds);
         if (currentRank.gameMode == GameMode.Normal)
         {
-            ContinueLevelFromPauseForBreadth();
+            ContinueLevelFromPauseForBreath();
         }
         else
         {
-            StartNewLevel();
+            StartLevel();
         }
     }
 
-    public void ContinueLevelFromPauseForBreadth()
+    private void ContinueLevelFromPauseForBreath()
     {
-        if (isGamePausedForBreadth == false)
-        {
-            return;
-        }
-
         rankTimer.ResumeTimer();
-        isGamePausedForBreadth = false;
         OnLevelContinued?.Invoke();
     }
 

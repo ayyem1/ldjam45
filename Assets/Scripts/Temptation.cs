@@ -48,7 +48,7 @@ public class Temptation : MonoBehaviour
 
     private void DamagePlayer()
     {
-        GameManager.Instance.playerHealth--;
+        GameManager.Instance.currentPlayerHealth--;
         Destroy(this.gameObject);
     }
 

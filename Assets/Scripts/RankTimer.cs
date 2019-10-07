@@ -32,6 +32,7 @@ public class RankTimer : MonoBehaviour
 
         slider.SetValueWithoutNotify(0.0F);
         isActive = false;
+        timeCompleted = 0.0F;
         SetRankTimesForLevel(ranksInLevel);
         DisableAllRankNotches();
         SetRankNotches(ranksInLevel);
