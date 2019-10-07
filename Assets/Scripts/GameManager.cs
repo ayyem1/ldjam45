@@ -235,11 +235,10 @@ public sealed class GameManager : MonoBehaviour
                 rankTimer.PauseTimer();
                 isGameActive = false;
                 OnGameOver?.Invoke();
-                // Need to set the sentry to be disabled.
             }
         }
 
-        if (isGameActive == true || (isGameActive == false && sentry.gameObject.activeSelf == true))
+        if (isGameActive == true || (isGameActive == false && tutorialStarted && sentry.gameObject.activeSelf == true))
         {
             if (Input.GetAxis("Fire1") > 0)
             {

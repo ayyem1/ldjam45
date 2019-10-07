@@ -125,9 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae31f540ff84d3844935043bbd3c0379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 100
+  hitPoints: 75
   trajectoryAngleVariance: 3
-  isBoss: 0
+  damageAmount: 1
   poppingSound: {fileID: 5992806601490148691}
   particlesToShowOnDestroy: {fileID: 4867330701692031175}
 --- !u!136 &-6739569007959015763

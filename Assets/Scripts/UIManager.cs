@@ -140,7 +140,10 @@ public class UIManager : MonoBehaviour
 
     public void RestartGame()
     {
+        this.clickSound.Play();
+
         DisableGameOver();
+        ContinueGame();
         Rank rank = GameManager.Instance.CurrentRank;
         if (rank.gameMode == GameMode.Normal)
         {
@@ -155,7 +158,6 @@ public class UIManager : MonoBehaviour
     public void ToMainMenu()
     {
         this.clickSound.Play();
-
         this.ammoBar.SetActive(false);
         GameManager.Instance.sentry.gameObject.SetActive(false);
         sentryArc.SetActive(false);
@@ -180,6 +182,7 @@ public class UIManager : MonoBehaviour
         CutsceneManager.StartCutscene();
         GameManager.Instance.StartGameFromTutorial();
         DisableGameOver();
+        ContinueGame();
     }
 
     public void ExitGame()
