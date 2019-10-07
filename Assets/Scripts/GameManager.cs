@@ -40,6 +40,7 @@ public sealed class GameManager : MonoBehaviour
     public Rank currentRank;
     public Vector3 finalPlayerPosition;
     public uint maximumAmmoCount = 100;
+    public bool isGameActive = false;
 
     private static GameManager instance = null;
 
@@ -49,7 +50,6 @@ public sealed class GameManager : MonoBehaviour
     [SerializeField] private int startingPlayerHealth = 3;
 
     private int currentPlayerHealth;
-    private bool isGameActive = false;
     private bool isPausedToBreathe = true;
 
     static GameManager() { }
