@@ -79,7 +79,6 @@ public sealed class GameManager : MonoBehaviour
         {
             AddAmmo(Difficulty.ammoGrantForHit);
         }
-
     }
 
     private void OnFail()
@@ -144,12 +143,13 @@ public sealed class GameManager : MonoBehaviour
     private void Start()
     {
         // TODO: Pull from player storage here.
-        // TODO: Delay this after tutorial.
         StartGameFromTutorial();
     }
 
     public void StartGameFromTutorial()
     {
+        CurrentRank = null;
+        currentPlayerHealth = startingPlayerHealth;
         Difficulty = tutorialDifficulty;
     }
 
@@ -210,7 +210,7 @@ public sealed class GameManager : MonoBehaviour
             }
         }
 
-        if (isGameActive == true || (isGameActive == false && sentry.gameObject.activeInHierarchy == true))
+        if (isGameActive == true || (isGameActive == false && sentry.gameObject.activeSelf == true))
         {
             if (Input.GetAxis("Fire1") > 0)
             {
@@ -231,6 +231,7 @@ public sealed class GameManager : MonoBehaviour
         {
             StartLevel();
             tutorialStarted = false;
+            isPausedToBreathe = false;
             return;
         }
 
@@ -305,6 +306,4 @@ public sealed class GameManager : MonoBehaviour
             Instance.ammoAmount -= amountToRemove;
         }
     }
-
-
 }

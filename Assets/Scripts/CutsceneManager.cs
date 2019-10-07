@@ -24,6 +24,8 @@ public class CutsceneManager : MonoBehaviour
             return;
         }
 
+        isCutsceneStarted = true;
+
         if (Input.GetKeyDown(KeyCode.Space) && CutsceneManager.isFirstSpacebarHit)
         {
             CutsceneManager.isFirstSpacebarHit = false;
@@ -51,7 +53,6 @@ public class CutsceneManager : MonoBehaviour
             GameManager.Instance.sentry.gameObject.SetActive(true);
             uiManager.sentryArc.SetActive(true);
             tutorialSpawner.StartTutorialSpawner();
-            isCutsceneStarted = false;
         }
     }
 }
