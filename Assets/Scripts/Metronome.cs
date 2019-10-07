@@ -13,6 +13,7 @@ public static class Metronome
     public static double nextBeatTime = 0;
 
     public static bool metronomeStarted = false;
+    public static bool metronomePaused = false;
 
     public static IEnumerator StartMetronome()
     {
@@ -22,21 +23,34 @@ public static class Metronome
 
         Metronome.metronomeStarted = true;
 
+
         while (true)
         {
-            double curTime = AudioSettings.dspTime;
-            if (curTime >= nextBeatTime)
+            if (Metronome.metronomePaused == false)
             {
-                Metronome.currentBeatTime = Metronome.nextBeatTime;
-                Metronome.nextBeatTime += Metronome.secondsBetweenBeats;
-
-                if (Metronome.OnBeat != null)
+                double curTime = AudioSettings.dspTime;
+                if (curTime >= nextBeatTime)
                 {
-                    Metronome.OnBeat();
+                    Metronome.currentBeatTime = Metronome.nextBeatTime;
+                    Metronome.nextBeatTime += Metronome.secondsBetweenBeats;
+
+                    if (Metronome.OnBeat != null)
+                    {
+                        Metronome.OnBeat();
+                    }
                 }
+            }
+            else
+            {
+                Metronome.nextBeatTime = AudioSettings.dspTime;
             }
 
             yield return null;
         }
+    }
+
+    public static void ToggleMetronomePause()
+    {
+        Metronome.metronomePaused = !Metronome.metronomePaused;
     }
 }
