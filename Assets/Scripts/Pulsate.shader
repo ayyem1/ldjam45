@@ -12,6 +12,8 @@
 	CGINCLUDE
 		#include "UnityCG.cginc"
 
+		#pragma multi_compile_fog
+
 		struct appdata
 	{
 		float4 vertex : POSITION;
@@ -25,6 +27,7 @@
 		float4 vertex : SV_POSITION;
 		float3 normal : NORMAL;
 		float4 color : COLOR;
+		UNITY_FOG_COORDS(1)
 	};
 
 	sampler2D _MainTex;
@@ -47,6 +50,7 @@
 		o.normal = normalize(newVertex);
 		float3 diffuse = _LightColor0.rgb * max(0.0, dot(o.normal, lightDirection));
 		o.color = float4(diffuse, 1.0);
+		UNITY_TRANSFER_FOG(o, o.vertex);
 
 		return o;
 	}
@@ -62,7 +66,9 @@
 #pragma fragment frag
 
 		half4 frag(v2f i) : COLOR {
-		return tex2D(_MainTex, i.uv); //* i.color;
+		fixed4 col = tex2D(_MainTex, i.uv); //* i.color;
+		UNITY_APPLY_FOG(i.fogCoord, col);
+		return col;
 	}
 		ENDCG
 	}
