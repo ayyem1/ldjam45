@@ -12,7 +12,8 @@ public class BreathingManager : MonoBehaviour
     public const float INPUT_GRACE_BUFFER = 0.1f;
 
     public AudioSource clickSound;
-    public AudioSource breathingSound;
+    public AudioSource goodBreathSound;
+    public AudioSource badBreathSound;
 
     public double calibrationValue;
 
@@ -118,6 +119,8 @@ public class BreathingManager : MonoBehaviour
     #region BreathCallbacks
     private void BreathSuccess()
     {
+        this.goodBreathSound.Play();
+
         if (BreathingManager.OnHit != null)
         {
             BreathingManager.OnHit();
@@ -126,6 +129,8 @@ public class BreathingManager : MonoBehaviour
 
     private void BreathFail()
     {
+        this.badBreathSound.Play();
+
         if (BreathingManager.OnFail != null)
         {
             BreathingManager.OnFail();
@@ -135,7 +140,7 @@ public class BreathingManager : MonoBehaviour
 
     private void PlayClickSound()
     {
-        this.clickSound.PlayScheduled(Metronome.currentBeatTime);
+        //this.clickSound.PlayScheduled(Metronome.currentBeatTime);
         StartCoroutine(this.DetectBreathMiss());
     }
 

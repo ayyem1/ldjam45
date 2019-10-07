@@ -18,6 +18,8 @@ public class UIManager : MonoBehaviour
 
     public Animator introCutsceneAnimator;
 
+    public AudioSource clickSound;
+
     private void Awake()
     {
         GameManager.OnGameOver += DisplayGameOver;
@@ -147,6 +149,8 @@ public class UIManager : MonoBehaviour
 
     public void ToMainMenu()
     {
+        this.clickSound.Play();
+
         this.ammoBar.SetActive(false);
         GameManager.Instance.sentry.gameObject.SetActive(false);
         sentryArc.SetActive(false);
@@ -162,6 +166,7 @@ public class UIManager : MonoBehaviour
 
     public void ExitGame()
     {
+        this.clickSound.Play();
         Application.Quit();
     }
 

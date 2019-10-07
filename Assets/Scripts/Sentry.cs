@@ -13,6 +13,8 @@ public class Sentry : MonoBehaviour
     private Camera mainCamera = null;
     private bool isSentryCoolingDown = false;
 
+    public AudioSource shootingSound;
+
     private void Start()
     {
         mainCamera = Camera.main;
@@ -60,6 +62,11 @@ public class Sentry : MonoBehaviour
         {
             StartCoroutine(Shoot());
             isSentryCoolingDown = true;
+
+            float pitch = UnityEngine.Random.Range(-0.1f, 0.1f);
+            this.shootingSound.pitch = this.shootingSound.pitch + pitch;
+
+            this.shootingSound.Play();
         }
     }
 

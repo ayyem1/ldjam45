@@ -57,6 +57,9 @@ public sealed class GameManager : MonoBehaviour
     private int currentPlayerHealth;
     private bool isPausedToBreathe = true;
 
+    public AudioSource playerDamagedSound;
+    public AudioSource rankUpSound;
+
     static GameManager() { }
     private GameManager() { }
 
@@ -136,6 +139,8 @@ public sealed class GameManager : MonoBehaviour
         if (isFirstLoadedRank == false && newRank != null)
         {
             OnRankChanged?.Invoke(CurrentRank);
+
+            this.rankUpSound.Play();
         }
 
         Difficulty = CurrentRank.difficulty;
@@ -184,6 +189,11 @@ public sealed class GameManager : MonoBehaviour
         {
             currentPlayerHealth -= damageAmount;
             PlayerDamaged?.Invoke();
+
+            float pitch = UnityEngine.Random.Range(-0.1f, 0.1f);
+            this.playerDamagedSound.pitch = this.playerDamagedSound.pitch + pitch;
+
+            this.playerDamagedSound.Play();
         }
     }
 

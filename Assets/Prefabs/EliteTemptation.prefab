@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 73093329433682216}
   - component: {fileID: -4631931749440929734}
   - component: {fileID: -6739569007959015763}
+  - component: {fileID: 5992806601490148691}
   m_Layer: 0
   m_Name: EliteTemptation
   m_TagString: Untagged
@@ -126,6 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitPoints: 5
   trajectoryAngleVariance: 3
+  poppingSound: {fileID: 5992806601490148691}
   particlesToShowOnDestroy: {fileID: 4867330701692031175}
 --- !u!136 &-6739569007959015763
 CapsuleCollider:
@@ -141,6 +143,102 @@ CapsuleCollider:
   m_Height: 30
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0.19057752}
+--- !u!82 &5992806601490148691
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3988205914616140603}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 7b162222cdd44e044b79621fa9451ccc, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &7820949312364646786
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,11 +336,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 73093329433682216}
     m_Modifications:
-    - target: {fileID: 2090798767435841491, guid: 474fac8f4ddee5f48a8b50f6a9526659,
-        type: 3}
-      propertyPath: m_Name
-      value: Small Burst
-      objectReference: {fileID: 0}
     - target: {fileID: 2090798767435841488, guid: 474fac8f4ddee5f48a8b50f6a9526659,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -342,6 +435,11 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2090798767435841491, guid: 474fac8f4ddee5f48a8b50f6a9526659,
+        type: 3}
+      propertyPath: m_Name
+      value: Small Burst
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 474fac8f4ddee5f48a8b50f6a9526659, type: 3}

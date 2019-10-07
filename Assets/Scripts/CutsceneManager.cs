@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class CutsceneManager : MonoBehaviour
 {
@@ -10,6 +11,15 @@ public class CutsceneManager : MonoBehaviour
     public bool isZoomFinished = false;
     public Spawner tutorialSpawner;
     public static bool isCutsceneStarted = false;
+
+    private bool calibrated = false;
+    private bool hasStartedPlayingMusic = false;
+    public bool playWoo = false;
+    private bool playedWoo = false;
+
+    public AudioSource partyMusic;
+    public AudioSource tranquilMusic;
+    public AudioSource wooSound;
 
     private void Start()
     {
@@ -31,10 +41,17 @@ public class CutsceneManager : MonoBehaviour
             this.cutsceneAnimator.SetBool("MainMenuClicked", false);
         }
 
-        if (BreathingManager.calibrationKeys.Count >= 20)
+        if (BreathingManager.calibrationKeys.Count >= 20 && calibrated == false)
         {
             this.cutsceneAnimator.SetBool("SufficientlyCalibrated", true);
             this.cloudAnimator.SetBool("ZoomInStarted", true);
+            calibrated = true;
+        }
+
+        if (calibrated == true && hasStartedPlayingMusic == false)
+        {
+            StartCoroutine(AttenuatePartyMusic());
+            hasStartedPlayingMusic = true;
         }
 
         if (isRotationFinished == true)
@@ -52,6 +69,41 @@ public class CutsceneManager : MonoBehaviour
             uiManager.sentryArc.SetActive(true);
             tutorialSpawner.StartTutorialSpawner();
             isCutsceneStarted = false;
+        }
+
+        if (playWoo == true && playedWoo == false)
+        {
+            playedWoo = true;
+            this.wooSound.Play();
+        }
+    }
+
+    private IEnumerator AttenuatePartyMusic()
+    {
+        this.partyMusic.Play();
+
+        float attenuationAmount = 0.01f;
+
+        while (this.partyMusic.volume < 1)
+        {
+            this.partyMusic.volume += attenuationAmount;
+            this.tranquilMusic.volume -= (2 * attenuationAmount);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(1.5f);
+
+        while (this.partyMusic.volume > 0)
+        {
+            this.partyMusic.volume -= (2* attenuationAmount);
+            this.tranquilMusic.volume += (2 * attenuationAmount);
+
+            if (this.tranquilMusic.volume > 0.3f)
+            {
+                this.tranquilMusic.volume = 0.3f;
+            }
+
+            yield return null;
         }
     }
 }

@@ -10,6 +10,8 @@ public class Temptation : MonoBehaviour
     public float trajectoryAngleVariance = 10f;
     private float trajectoryOffsetAngle;
 
+    public AudioSource poppingSound;
+
     private Camera mainCamera = null;
     [SerializeField] private ParticleSystem particlesToShowOnDestroy;
 
@@ -91,6 +93,9 @@ public class Temptation : MonoBehaviour
     private IEnumerator PlayEffectsAndDestroy()
     {
         // Do temptation destroy vfx/sounds here
+        float pitch = Random.Range(-0.1f, 0.1f);
+        this.poppingSound.pitch = this.poppingSound.pitch + pitch;
+        this.poppingSound.Play();
         particlesToShowOnDestroy.Play();
         yield return new WaitForSeconds(0.2F);
         Destroy(this.gameObject);
