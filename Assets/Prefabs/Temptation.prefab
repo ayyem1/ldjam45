@@ -305,7 +305,32 @@ PrefabInstance:
     - target: {fileID: 2090798767435841489, guid: 474fac8f4ddee5f48a8b50f6a9526659,
         type: 3}
       propertyPath: InitialModule.startSpeed.scalar
-      value: 16
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2090798767435841489, guid: 474fac8f4ddee5f48a8b50f6a9526659,
+        type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2090798767435841489, guid: 474fac8f4ddee5f48a8b50f6a9526659,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2090798767435841489, guid: 474fac8f4ddee5f48a8b50f6a9526659,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2090798767435841489, guid: 474fac8f4ddee5f48a8b50f6a9526659,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2090798767435841489, guid: 474fac8f4ddee5f48a8b50f6a9526659,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 474fac8f4ddee5f48a8b50f6a9526659, type: 3}
