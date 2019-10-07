@@ -233,8 +233,11 @@ public sealed class GameManager : MonoBehaviour
 
     private void StartLevel()
     {
-        rankTimer.RestartTimer();
-        OnLevelStarted?.Invoke();
+        if (CurrentRank.isBoss == false)
+        {
+            rankTimer.RestartTimer();
+            OnLevelStarted?.Invoke();
+        }
     }
 
     private void PauseGameToBreathe()
@@ -277,8 +280,11 @@ public sealed class GameManager : MonoBehaviour
 
     private void ContinueLevelFromPauseForBreath()
     {
-        rankTimer.ResumeTimer();
-        OnLevelContinued?.Invoke();
+        if (CurrentRank.isBoss == false)
+        {
+            rankTimer.ResumeTimer();
+            OnLevelContinued?.Invoke();
+        }
     }
 
     private void OnDestroy()
