@@ -17,7 +17,7 @@ public class FadeOutTitle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (CutsceneManager.isFirstSpacebarHit == false)
+        if (CutsceneManager.isFirstSpacebarHit == false && CutsceneManager.isCutsceneStarted == true)
         {
             float newAlpha = titlePanel.color.a - fadeSpeed;
 

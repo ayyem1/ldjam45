@@ -76,7 +76,7 @@ public class BreathingManager : MonoBehaviour
 
             this.adjustedInputTimestamp = AudioSettings.dspTime;
 
-            if (this.IsMostRecentInputOnBeat() == true)
+            if (GameManager.Instance.tutorialStarted == true && this.IsMostRecentInputOnBeat() == true)
             {
                 this.BreathSuccess();
             }

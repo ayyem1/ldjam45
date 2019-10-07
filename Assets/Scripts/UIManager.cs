@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text announcementSubText = null;
     [SerializeField] private GameObject ammoBar = null;
     [SerializeField] public GameObject sentryArc;
+    public Image titleImage;
 
     public Animator introCutsceneAnimator;
 
@@ -180,6 +181,8 @@ public class UIManager : MonoBehaviour
         CutsceneManager.StartCutscene();
         GameManager.Instance.StartGameFromTutorial();
         DisableGameOver();
+        Color titleImageColor = this.titleImage.color;
+        this.titleImage.color = new Color(titleImageColor.r, titleImageColor.g, titleImageColor.b, 1.0f);
     }
 
     public void ExitGame()
