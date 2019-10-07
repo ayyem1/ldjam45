@@ -60,6 +60,8 @@ public sealed class GameManager : MonoBehaviour
     public AudioSource playerDamagedSound;
     public AudioSource rankUpSound;
 
+    public Spawner bossSpawner;
+
     static GameManager() { }
     private GameManager() { }
 
@@ -255,6 +257,11 @@ public sealed class GameManager : MonoBehaviour
         // IS CurrentRank a boss.
         // turn on boss announcement.
         // Activate boss spawner.
+
+        if (this.CurrentRank.isBoss == true)
+        {
+            this.bossSpawner.ForceSpawnBoss();
+        }
 
         if (CurrentRank.gameMode == GameMode.Normal)
         {

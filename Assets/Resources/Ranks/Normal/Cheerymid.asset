@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ddefd8e0559b7e42a8b775d359b23a4, type: 3}
-  m_Name: Nothing
+  m_Name: Cheerymid
   m_EditorClassIdentifier: 
-  rankDurationInSeconds: 10
-  rankName: Nothing
-  nextRank: {fileID: 11400000, guid: 63c2cbe205072ac4d8cf4f1a65ae89d1, type: 2}
+  rankDurationInSeconds: 60
+  rankName: CHEERY-MID!
+  nextRank: {fileID: 0}
   gameMode: 0
-  difficulty: {fileID: 11400000, guid: 7cefca307efb2a1428bd172db5755f4d, type: 2}
-  isBoss: 0
+  difficulty: {fileID: 11400000, guid: b9623971679e95b43905fae5735b071f, type: 2}
+  isBoss: 1

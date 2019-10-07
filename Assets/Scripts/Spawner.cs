@@ -9,6 +9,7 @@ public class Spawner : MonoBehaviour
 
     [SerializeField] private GameObject temptationPrefab;
     [SerializeField] private GameObject eliteTemptationPrefab;
+    [SerializeField] private GameObject cheerymidPrefab;
     private float secondsBetweenSpawnAttempt;
     private float probabiltyOfSpawnSuccess;
     private float probabilityOfEliteSpawn;
@@ -66,8 +67,6 @@ public class Spawner : MonoBehaviour
 
     public IEnumerator SpawnTutorialTemptations()
     {
-
-
         Difficulty difficulty = GameManager.Instance.Difficulty;
         uint spawnedTemptations = 0;
 
@@ -97,6 +96,11 @@ public class Spawner : MonoBehaviour
                 Instantiate(temptationPrefab, this.transform.position, new Quaternion());
             }
         }
+    }
+
+    public void ForceSpawnBoss()
+    {
+        Instantiate(cheerymidPrefab, this.transform.position, new Quaternion());
     }
 
     public void StopSpawner()

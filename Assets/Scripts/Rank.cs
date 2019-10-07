@@ -8,4 +8,5 @@ public class Rank : ScriptableObject
     public Rank nextRank;
     public GameMode gameMode;
     public Difficulty difficulty;
+    public bool isBoss = false;
 }
