@@ -45,12 +45,20 @@ public class BreathingManager : MonoBehaviour
 
     private void OnGameStarted()
     {
-        StartCoroutine(Metronome.StartMetronome());
+        if (Metronome.metronomeStarted == false)
+        {
+            StartCoroutine(Metronome.StartMetronome());
+        }
+        else
+        {
+            Metronome.metronomePaused = false;
+        }
+
     }
 
     private void OnGameOver()
     {
-        StopAllCoroutines();
+        Metronome.metronomePaused = true;
     }
 
     public void Update()
@@ -152,8 +160,8 @@ public class BreathingManager : MonoBehaviour
         //0.1 seconds is too fast to process additional inputs...
         //So we wait a little longer before we check the proper grace window in WasBeatMissed()
         //Yeah, I don't like it either.
-        double endOfGraceBuffer = Metronome.currentBeatTime + (2* INPUT_GRACE_BUFFER);  
-        
+        double endOfGraceBuffer = Metronome.currentBeatTime + (2 * INPUT_GRACE_BUFFER);
+
         //First, wait grace period
         while (currentDspTime < endOfGraceBuffer)
         {

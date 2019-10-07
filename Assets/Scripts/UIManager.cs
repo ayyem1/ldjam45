@@ -99,7 +99,7 @@ public class UIManager : MonoBehaviour
 
         GameManager.Instance.isGameActive = true;
         Time.timeScale = 1.0F;
-        Metronome.ToggleMetronomePause();
+        Metronome.metronomePaused = false;
     }
 
     private void PauseGame()
@@ -155,12 +155,24 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.sentry.gameObject.SetActive(false);
         sentryArc.SetActive(false);
         GameManager.Instance.isGameActive = false;
+        GameManager.Instance.tutorialStarted = false;
+        GameManager.Instance.rankTimer.PauseTimer();
         GameManager.Instance.rankTimer.gameObject.SetActive(false);
         introCutsceneAnimator.SetBool("MainMenuClicked", true);
         introCutsceneAnimator.SetBool("InitiatedGame", false);
         introCutsceneAnimator.SetBool("SufficientlyCalibrated", false);
         CutsceneManager.isFirstSpacebarHit = true;
         CutsceneManager.isCutsceneStarted = true;
+        BreathingManager.calibrationKeys.Clear();
+        if (Metronome.metronomeStarted == false)
+        {
+            StartCoroutine(Metronome.StartMetronome());
+        }
+        else if (Metronome.metronomePaused)
+        {
+            Metronome.ToggleMetronomePause();
+        }
+        GameManager.Instance.StartGameFromTutorial();
         DisableGameOver();
     }
 
@@ -172,6 +184,7 @@ public class UIManager : MonoBehaviour
 
     public void DisplayGameOver()
     {
+        Metronome.metronomePaused = true;
         gameOverMenu.SetActive(true);
     }
 

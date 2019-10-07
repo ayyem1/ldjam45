@@ -18,6 +18,7 @@ public class Temptation : MonoBehaviour
     private void Awake()
     {
         RankTimer.OnTimeInRankCompleted += DestroyTemptation;
+        GameManager.OnGameOver += DestroyTemptation;
         this.GetRandomMoveSpeedAndTrajectory();
     }
 
@@ -29,6 +30,7 @@ public class Temptation : MonoBehaviour
     private void OnDestroy()
     {
         RankTimer.OnTimeInRankCompleted -= DestroyTemptation;
+        GameManager.OnGameOver -= DestroyTemptation;
     }
 
     private void GetRandomMoveSpeedAndTrajectory()
