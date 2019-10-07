@@ -1671,6 +1671,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8f6c23cf390adc4f881aec64e0337c7, type: 3}
+--- !u!1 &620779249
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 620779250}
+  m_Layer: 0
+  m_Name: LaunchPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &620779250
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620779249}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 752062804}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &620982283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2081,7 +2111,7 @@ MonoBehaviour:
   sentryCenter: {x: 0.6, y: 57.61, z: -140.49}
   sentryCooldownInSeconds: 0.1
   ammoAmount: 10
-  launchPoint: {fileID: 0}
+  launchPoint: {fileID: 620779250}
   kiBlastPrefabToSpawn: {fileID: 2976131355030668757, guid: 08942bdc4de781a43b03269f187ef3e7,
     type: 3}
 --- !u!64 &752062801
@@ -2155,6 +2185,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 827101319}
+  - {fileID: 620779250}
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: -3.616, y: -9.950001, z: 0}
@@ -2517,7 +2548,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &827101319
 Transform:
   m_ObjectHideFlags: 0
@@ -2680,16 +2711,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8394997780995056367, guid: 04d412b9a96dba04d959295e42229f0f,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8394997780995056367, guid: 04d412b9a96dba04d959295e42229f0f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 04d412b9a96dba04d959295e42229f0f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2760,6 +2781,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9288e4b3758d3a548a04dbae9ae6a21a, type: 2}
+    - target: {fileID: 8394997780995056367, guid: 04d412b9a96dba04d959295e42229f0f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394997780995056367, guid: 04d412b9a96dba04d959295e42229f0f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04d412b9a96dba04d959295e42229f0f, type: 3}
 --- !u!1001 &846164786
@@ -3376,13 +3407,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.061551303, y: -0.09236002, z: 0.0009641219, w: 0.99382097}
+  m_LocalRotation: {x: -0.06093173, y: -0.09276994, z: -0.0056878687, w: 0.99380517}
   m_LocalPosition: {x: 5.3, y: 57.2, z: -165.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -7.017, y: -10.666, z: 0.767}
+  m_LocalEulerAnglesHint: {x: -7.017, y: -10.666, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3455,14 +3486,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fa06a86117fc34aac2338a0b4e2253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficulty: {fileID: 11400000, guid: 7cefca307efb2a1428bd172db5755f4d, type: 2}
-  sentry: {fileID: 0}
-  playerHealth: 5
+  sentry: {fileID: 752062800}
+  currentPlayerHealth: 0
   finalPlayerPosition: {x: -0.23, y: 57.61, z: -140.49}
   maximumAmmoCount: 100
   rankTimer: {fileID: 971532967}
   initialRank: {fileID: 11400000, guid: 5051b2304a94b4c4888789ac901f5fae, type: 2}
   breathPauseInSeconds: 10
+  startingPlayerHealth: 3
 --- !u!82 &963194231
 AudioSource:
   m_ObjectHideFlags: 0
