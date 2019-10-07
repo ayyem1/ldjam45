@@ -15,6 +15,6 @@ public class AmmoBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ammoUi.value = GameManager.Instance.sentry.GetAmmoAmount(); 
+        ammoUi.value = GameManager.Instance.ammoAmount;
     }
 }

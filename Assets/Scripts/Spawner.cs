@@ -15,12 +15,23 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator spawnTemptations = null;
 
+    public bool isTutorial = false;
+
     private void Awake()
     {
-        GameManager.OnLevelStarted += StartSpawner;
-        GameManager.OnLevelContinued += StartSpawner;
-        GameManager.OnGameOver += StopSpawner;
-        RankTimer.OnTimeInRankCompleted += StopSpawner;
+        if (isTutorial == false)
+        {
+            GameManager.OnLevelStarted += StartSpawner;
+            GameManager.OnLevelContinued += StartSpawner;
+            GameManager.OnGameOver += StopSpawner;
+            RankTimer.OnTimeInRankCompleted += StopSpawner;
+        }
+    }
+
+    public void StartTutorialSpawner()
+    {
+        ResetSpawner();
+        StartCoroutine(SpawnTutorialTemptations());
     }
 
     public void StartSpawner()
@@ -51,6 +62,24 @@ public class Spawner : MonoBehaviour
             yield return new WaitForSeconds(this.secondsBetweenSpawnAttempt);
             this.AttemptTemptationSpawn();
         }
+    }
+
+    public IEnumerator SpawnTutorialTemptations()
+    {
+
+
+        Difficulty difficulty = GameManager.Instance.Difficulty;
+        uint spawnedTemptations = 0;
+
+        while (spawnedTemptations < 2)
+        {
+            yield return new WaitForSeconds(this.secondsBetweenSpawnAttempt);
+            Instantiate(temptationPrefab, this.transform.position, new Quaternion());
+            ++spawnedTemptations;
+        }
+
+        GameManager.Instance.StartGameFromNormal();
+        this.gameObject.SetActive(false);
     }
 
     private void AttemptTemptationSpawn()

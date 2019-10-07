@@ -13,6 +13,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject pauseMenuItems3 = null;
     [SerializeField] private Text announcementText = null;
     [SerializeField] private Text announcementSubText = null;
+    [SerializeField] private GameObject ammoBar = null;
+    [SerializeField] public GameObject sentryArc;
+
+    public Animator introCutsceneAnimator;
+
     private void Awake()
     {
         GameManager.OnGameOver += DisplayGameOver;
@@ -142,7 +147,16 @@ public class UIManager : MonoBehaviour
 
     public void ToMainMenu()
     {
-        Debug.Log("To Main Menu.");
+        this.ammoBar.SetActive(false);
+        GameManager.Instance.sentry.gameObject.SetActive(false);
+        sentryArc.SetActive(false);
+        GameManager.Instance.isGameActive = false;
+        GameManager.Instance.rankTimer.gameObject.SetActive(false);
+        introCutsceneAnimator.SetBool("MainMenuClicked", true);
+        introCutsceneAnimator.SetBool("InitiatedGame", false);
+        introCutsceneAnimator.SetBool("SufficientlyCalibrated", false);
+        CutsceneManager.isFirstSpacebarHit = true;
+        CutsceneManager.isCutsceneStarted = true;
         DisableGameOver();
     }
 
@@ -154,5 +168,10 @@ public class UIManager : MonoBehaviour
     public void DisplayGameOver()
     {
         gameOverMenu.SetActive(true);
+    }
+
+    public void DisplayAmmoBar()
+    {
+        ammoBar.SetActive(true);
     }
 }

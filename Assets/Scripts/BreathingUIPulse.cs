@@ -91,12 +91,19 @@ public class BreathingUIPulse : MonoBehaviour
 
     private void DisplaySuccess()
     {
-        StartCoroutine(this.DisplayFeedbackObject(this.successObject));
+        if (GameManager.Instance.isGameActive == true || GameManager.Instance.tutorialStarted == true)
+        {
+            StartCoroutine(this.DisplayFeedbackObject(this.successObject));
+        }
+        
     }
 
     private void DisplayFail()
     {
-        StartCoroutine(this.DisplayFeedbackObject(this.failObject));
+        if (GameManager.Instance.isGameActive == true || GameManager.Instance.tutorialStarted == true)
+        {
+            StartCoroutine(this.DisplayFeedbackObject(this.failObject));
+        }
     }
 
     private IEnumerator DisplayFeedbackObject(GameObject objectToToggle)

@@ -42,14 +42,17 @@ public sealed class GameManager : MonoBehaviour
 
     public Vector3 finalPlayerPosition;
     public bool isGameActive;
+    public bool tutorialStarted;
     public uint maximumAmmoCount = 100;
 
     private static GameManager instance = null;
 
-    [SerializeField] private RankTimer rankTimer = null;
+    [SerializeField] public RankTimer rankTimer = null;
     [SerializeField] private Rank initialRank = null;
+    [SerializeField] private Difficulty tutorialDifficulty = null;
     [SerializeField] private float breathPauseInSeconds = 10.0F;
     [SerializeField] private int startingPlayerHealth = 3;
+    [SerializeField] public uint ammoAmount = 10;
 
     private int currentPlayerHealth;
     private bool isPausedToBreathe = true;
@@ -72,22 +75,19 @@ public sealed class GameManager : MonoBehaviour
 
     private void OnHit()
     {
-        if (isGameActive == false)
+        if (tutorialStarted == true || isGameActive == true)
         {
-            return;
+            AddAmmo(Difficulty.ammoGrantForHit);
         }
 
-        sentry.AddAmmo(Difficulty.ammoGrantForHit);
     }
 
     private void OnFail()
     {
-        if (isGameActive == false)
+        if (tutorialStarted == true || isGameActive == true)
         {
-            return;
+            RemoveAmmo(Difficulty.ammoReductionForMiss);
         }
-
-        sentry.RemoveAmmo(Difficulty.ammoReductionForMiss);
     }
 
     private void OnNextRankReached()
@@ -145,11 +145,17 @@ public sealed class GameManager : MonoBehaviour
     {
         // TODO: Pull from player storage here.
         // TODO: Delay this after tutorial.
-        //StartGameFromNormal();
+        StartGameFromTutorial();
+    }
+
+    public void StartGameFromTutorial()
+    {
+        Difficulty = tutorialDifficulty;
     }
 
     public void StartGameFromNormal()
     {
+        this.rankTimer.gameObject.SetActive(true);
         isGameActive = true;
         currentPlayerHealth = startingPlayerHealth;
         SetFirstRankInLevel(initialRank, true);
@@ -163,7 +169,7 @@ public sealed class GameManager : MonoBehaviour
         currentPlayerHealth = startingPlayerHealth;
         SetFirstRankInLevel(FindFirstHighScoreLevel(), true);
         OnGameStarted?.Invoke();
-        PauseToBreathe();
+        PauseGameToBreathe();
     }
 
     public void DamagePlayer(int damageAmount)
@@ -194,21 +200,22 @@ public sealed class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (isGameActive == false)
+        if (isGameActive == true)
         {
-            return;
+            if (currentPlayerHealth <= 0)
+            {
+                rankTimer.PauseTimer();
+                isGameActive = false;
+                OnGameOver?.Invoke();
+            }
         }
 
-        if (currentPlayerHealth <= 0)
+        if (isGameActive == true || (isGameActive == false && sentry.gameObject.activeInHierarchy == true))
         {
-            rankTimer.PauseTimer();
-            isGameActive = false;
-            OnGameOver?.Invoke();
-        }
-
-        if (Input.GetAxis("Fire1") > 0)
-        {
-            sentry.FireSentry();
+            if (Input.GetAxis("Fire1") > 0)
+            {
+                sentry.FireSentry();
+            }
         }
     }
 
@@ -220,6 +227,13 @@ public sealed class GameManager : MonoBehaviour
 
     private void PauseGameToBreathe()
     {
+        if (tutorialStarted == true)
+        {
+            StartLevel();
+            tutorialStarted = false;
+            return;
+        }
+
         isPausedToBreathe = true;
         StartCoroutine(PauseToBreathe());
     }
@@ -270,5 +284,27 @@ public sealed class GameManager : MonoBehaviour
         return ranks;
     }
 
-    
+    public void AddAmmo(uint amountToAdd)
+    {
+        ammoAmount += amountToAdd;
+
+        if (Instance.ammoAmount > GameManager.Instance.maximumAmmoCount)
+        {
+            Instance.ammoAmount = GameManager.Instance.maximumAmmoCount;
+        }
+    }
+
+    public void RemoveAmmo(uint amountToRemove)
+    {
+        if (amountToRemove > GameManager.Instance.ammoAmount)
+        {
+            Instance.ammoAmount = 0;
+        }
+        else
+        {
+            Instance.ammoAmount -= amountToRemove;
+        }
+    }
+
+
 }

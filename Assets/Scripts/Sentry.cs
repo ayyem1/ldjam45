@@ -7,7 +7,6 @@ public class Sentry : MonoBehaviour
     [SerializeField] private float sentryRadius = 0.0F;
     [SerializeField] private Vector3 sentryCenter = Vector3.zero;
     [SerializeField] private float sentryCooldownInSeconds = 0.1F;
-    [SerializeField] private uint ammoAmount = 10;
     [SerializeField] private Transform launchPoint = null;
     [SerializeField] private GameObject kiBlastPrefabToSpawn = null;
 
@@ -57,7 +56,7 @@ public class Sentry : MonoBehaviour
 
     public void FireSentry()
     {
-        if (isSentryCoolingDown == false && ammoAmount > 0)
+        if (isSentryCoolingDown == false && GameManager.Instance.ammoAmount > 0)
         {
             StartCoroutine(Shoot());
             isSentryCoolingDown = true;
@@ -66,38 +65,11 @@ public class Sentry : MonoBehaviour
 
     private IEnumerator Shoot()
     {
-        ammoAmount -= 1;
+        GameManager.Instance.ammoAmount -= 1;
         GameObject projectile = Instantiate(kiBlastPrefabToSpawn);
         projectile.transform.SetPositionAndRotation(launchPoint.position, launchPoint.rotation);
         yield return new WaitForSeconds(sentryCooldownInSeconds);
         isSentryCoolingDown = false;
-    }
-
-    public uint GetAmmoAmount()
-    {
-        return ammoAmount;
-    }
-
-    public void AddAmmo(uint amountToAdd)
-    {
-        ammoAmount += amountToAdd;
-
-        if (ammoAmount > GameManager.Instance.maximumAmmoCount)
-        {
-            ammoAmount = GameManager.Instance.maximumAmmoCount;
-        }
-    }
-
-    public void RemoveAmmo(uint amountToRemove)
-    {
-        if (amountToRemove > ammoAmount)
-        {
-            ammoAmount = 0;
-        }
-        else
-        {
-            ammoAmount -= amountToRemove;
-        }
     }
 
     private void TestFunction()

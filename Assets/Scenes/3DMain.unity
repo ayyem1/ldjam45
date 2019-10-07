@@ -1218,7 +1218,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1343,6 +1343,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8f6c23cf390adc4f881aec64e0337c7, type: 3}
+--- !u!1 &328588410 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: c8f6c23cf390adc4f881aec64e0337c7,
+    type: 3}
+  m_PrefabInstance: {fileID: 328588409}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &328588411
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328588410}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cd45a45fe3dda914081d11b069063638, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &353498990
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1560,6 +1585,7 @@ MonoBehaviour:
     type: 3}
   eliteTemptationPrefab: {fileID: 3988205914616140603, guid: cc3f84d920752df4badc6ad601ec06eb,
     type: 3}
+  isTutorial: 0
 --- !u!23 &380521987
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2224,6 +2250,7 @@ MonoBehaviour:
     type: 3}
   eliteTemptationPrefab: {fileID: 3988205914616140603, guid: cc3f84d920752df4badc6ad601ec06eb,
     type: 3}
+  isTutorial: 0
 --- !u!23 &510925207
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2679,7 +2706,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &590357840
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3690,7 +3717,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &752062800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3706,7 +3733,6 @@ MonoBehaviour:
   sentryRadius: 3
   sentryCenter: {x: 0.6, y: 57.61, z: -140.49}
   sentryCooldownInSeconds: 0.1
-  ammoAmount: 50
   launchPoint: {fileID: 620779250}
   kiBlastPrefabToSpawn: {fileID: 3988205914616140603, guid: 1bf7cd307126ed84baefcae5dc06fe2b,
     type: 3}
@@ -4367,8 +4393,8 @@ RectTransform:
   m_Father: {fileID: 462565032}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4773,7 +4799,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4909,6 +4935,9 @@ GameObject:
   - component: {fileID: 963194232}
   - component: {fileID: 963194231}
   - component: {fileID: 963194233}
+  - component: {fileID: 963194234}
+  - component: {fileID: 963194235}
+  - component: {fileID: 963194236}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4989,7 +5018,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -7.017, y: -10.666, z: 0}
+  m_LocalEulerAnglesHint: {x: -7.017, y: -10.666, z: 0.9350001}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5064,12 +5093,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sentry: {fileID: 752062800}
   finalPlayerPosition: {x: -0.23, y: 57.61, z: -140.49}
-  maximumAmmoCount: 100
   isGameActive: 0
+  tutorialStarted: 0
+  maximumAmmoCount: 100
   rankTimer: {fileID: 971532967}
   initialRank: {fileID: 11400000, guid: 5051b2304a94b4c4888789ac901f5fae, type: 2}
+  tutorialDifficulty: {fileID: 11400000, guid: b044c4e607b9c774490a75e1be5d9991, type: 2}
   breathPauseInSeconds: 10
   startingPlayerHealth: 3
+  ammoAmount: 10
 --- !u!82 &963194231
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5189,6 +5221,61 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
+--- !u!111 &963194234
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 82643023ab84edd40a0fd71dde854bdf, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 82643023ab84edd40a0fd71dde854bdf, type: 2}
+  - {fileID: 7400000, guid: d3549f60e1ae6414d8bb2c88753eb36e, type: 2}
+  - {fileID: 7400000, guid: 8564e20f98eefbb488e3d7ffa6ef5471, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!95 &963194235
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fb72b6e814453a24b96bfec6cb96c816, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &963194236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac46f30ce0e764e4f892095c26249c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiManager: {fileID: 1735351989}
+  cutsceneAnimator: {fileID: 963194235}
+  cloudAnimator: {fileID: 328588411}
+  isRotationFinished: 0
+  isZoomFinished: 0
+  tutorialSpawner: {fileID: 1430597652}
 --- !u!1 &971532965
 GameObject:
   m_ObjectHideFlags: 0
@@ -5206,7 +5293,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &971532966
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11836,7 +11923,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -11893,7 +11980,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1266272403
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12221,6 +12308,7 @@ MonoBehaviour:
     type: 3}
   eliteTemptationPrefab: {fileID: 3988205914616140603, guid: cc3f84d920752df4badc6ad601ec06eb,
     type: 3}
+  isTutorial: 0
 --- !u!23 &1427136874
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12265,6 +12353,101 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1427136871}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1430597650
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1430597651}
+  - component: {fileID: 1430597654}
+  - component: {fileID: 1430597653}
+  - component: {fileID: 1430597652}
+  m_Layer: 0
+  m_Name: tutorialSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1430597651
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430597650}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2072501098}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1430597652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430597650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f69ad5ee5fb38e4bab86ffda2af335c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  temptationPrefab: {fileID: 347361772104926015, guid: da74c515f459b954fa282907d06e6a42,
+    type: 3}
+  eliteTemptationPrefab: {fileID: 3988205914616140603, guid: cc3f84d920752df4badc6ad601ec06eb,
+    type: 3}
+  isTutorial: 1
+--- !u!23 &1430597653
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430597650}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &1430597654
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430597650}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &1445467650
 PrefabInstance:
@@ -12785,6 +12968,7 @@ MonoBehaviour:
     type: 3}
   eliteTemptationPrefab: {fileID: 3988205914616140603, guid: cc3f84d920752df4badc6ad601ec06eb,
     type: 3}
+  isTutorial: 0
 --- !u!23 &1587947197
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -13417,6 +13601,9 @@ MonoBehaviour:
   pauseMenuItems3: {fileID: 382973158}
   announcementText: {fileID: 1746216714}
   announcementSubText: {fileID: 953213319}
+  ammoBar: {fileID: 590357839}
+  sentryArc: {fileID: 1266272402}
+  introCutsceneAnimator: {fileID: 963194235}
 --- !u!1 &1739283138
 GameObject:
   m_ObjectHideFlags: 0
@@ -14016,6 +14203,7 @@ MonoBehaviour:
     type: 3}
   eliteTemptationPrefab: {fileID: 3988205914616140603, guid: cc3f84d920752df4badc6ad601ec06eb,
     type: 3}
+  isTutorial: 0
 --- !u!23 &1847553348
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -14740,6 +14928,7 @@ Transform:
   - {fileID: 1427136872}
   - {fileID: 510925205}
   - {fileID: 380521985}
+  - {fileID: 1430597651}
   m_Father: {fileID: 0}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
