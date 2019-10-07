@@ -142,8 +142,6 @@ public sealed class GameManager : MonoBehaviour
         Difficulty = CurrentRank.difficulty;
 
         Metronome.UpdateMetronomeTempo(Difficulty.breathBPM);
-
-        UIManager.U
     }
 
     private void SetNextRankInLevel(Rank newRank, bool isFirstLoadedRank)
