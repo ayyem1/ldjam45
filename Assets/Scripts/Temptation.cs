@@ -15,11 +15,18 @@ public class Temptation : MonoBehaviour
 
     private void Awake()
     {
-        this.GetRandomMoveSpeedAndTrajectory();   
+        RankTimer.OnTimeInRankCompleted += DestroyTemptation;
+        this.GetRandomMoveSpeedAndTrajectory();
     }
+
     private void Start()
     {
         mainCamera = Camera.main;
+    }
+
+    private void OnDestroy()
+    {
+        RankTimer.OnTimeInRankCompleted -= DestroyTemptation;
     }
 
     private void GetRandomMoveSpeedAndTrajectory()
@@ -77,16 +84,21 @@ public class Temptation : MonoBehaviour
 
         if (this.hitPoints <= 0)
         {
-            this.moveSpeed = 0;
-            StartCoroutine(DestroyTemptation());
+            DestroyTemptation();
         } 
     }
 
-    private IEnumerator DestroyTemptation()
+    private void DestroyTemptation()
+    {
+        this.moveSpeed = 0;
+        StartCoroutine(PlayEffectsAndDestroy());
+    }
+
+    private IEnumerator PlayEffectsAndDestroy()
     {
         // Do temptation destroy vfx/sounds here
         particlesToShowOnDestroy.Play();
-        yield return new WaitForSeconds(0.25F);
+        yield return new WaitForSeconds(0.2F);
         Destroy(this.gameObject);
     }
 }

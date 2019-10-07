@@ -30,8 +30,8 @@ public class Spawner : MonoBehaviour
         {
             StopSpawner();
         }
-        spawnTemptations = SpawnTemptations();
-        StartCoroutine(spawnTemptations);
+
+        StartCoroutine(SpawnTemptations());
     }
 
     private void ResetSpawner()
@@ -72,10 +72,7 @@ public class Spawner : MonoBehaviour
 
     public void StopSpawner()
     {
-        if (spawnTemptations != null)
-        {
-            StopCoroutine(spawnTemptations);
-        }
+        StopAllCoroutines();
     }
 
     private void OnDestroy()
