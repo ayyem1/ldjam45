@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     public const string BossLevelAnnouncementSubText = "Prepare Yourself!";
 
     [SerializeField] private GameObject gameOverMenu = null;
+    [SerializeField] private GameObject victoryMenu = null;
     [SerializeField] private GameObject pauseMenuItems2 = null;
     [SerializeField] private GameObject pauseMenuItems3 = null;
     [SerializeField] private Text announcementText = null;
@@ -30,6 +31,11 @@ public class UIManager : MonoBehaviour
     public void DisableGameOver()
     {
         gameOverMenu.SetActive(false);
+    }
+
+    public void DisableVictory()
+    {
+        victoryMenu.SetActive(false);
     }
 
     private void DisplayRankUpAnnouncement(Rank newRank)
@@ -195,6 +201,12 @@ public class UIManager : MonoBehaviour
     {
         Metronome.metronomePaused = true;
         gameOverMenu.SetActive(true);
+    }
+
+    public void DisplayVictory()
+    {
+        Metronome.metronomePaused = true;
+        victoryMenu.SetActive(true);
     }
 
     public void DisplayAmmoBar()

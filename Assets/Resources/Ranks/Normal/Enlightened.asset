@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ddefd8e0559b7e42a8b775d359b23a4, type: 3}
   m_Name: Enlightened
   m_EditorClassIdentifier: 
-  rankDurationInSeconds: 10
+  rankDurationInSeconds: 30
   rankName: Enlightened
-  nextRank: {fileID: 11400000, guid: 53608bd68482e154fa0a9c394601fd40, type: 2}
+  nextRank: {fileID: 11400000, guid: 4b19df22ef63e9c40839c92a8dcf4ece, type: 2}
   gameMode: 0
-  difficulty: {fileID: 11400000, guid: 7dfdc6a383ae7934392048a88dea6b7c, type: 2}
+  difficulty: {fileID: 11400000, guid: 5cb373870d95e9f4f8c74b04ba403c84, type: 2}
+  isBoss: 0
