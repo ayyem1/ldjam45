@@ -252,6 +252,10 @@ public sealed class GameManager : MonoBehaviour
     private IEnumerator PauseToBreathe()
     {
         yield return new WaitForSeconds(breathPauseInSeconds);
+        // IS CurrentRank a boss.
+        // turn on boss announcement.
+        // Activate boss spawner.
+
         if (CurrentRank.gameMode == GameMode.Normal)
         {
             ContinueLevelFromPauseForBreath();
