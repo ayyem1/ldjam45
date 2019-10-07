@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class RankTimer : MonoBehaviour
 {
-    public static Action OnNextRankReached;
+    public static Action OnTimeInRankCompleted;
 
     [SerializeField] private Slider slider = null;
     [SerializeField] private GameObject[] rankNotches = null;
@@ -131,7 +131,7 @@ public class RankTimer : MonoBehaviour
         slider.value = (timeCompleted) / totalDurationOfCurrentLevel;
         if (timeCompleted >= rankTimesForLevel[currentRankTimeIndex])
         {
-            OnNextRankReached?.Invoke();
+            OnTimeInRankCompleted?.Invoke();
             currentRankTimeIndex = Math.Min(rankTimesForLevel.Count - 1, currentRankTimeIndex + 1);
         }
     }

@@ -1,14 +1,68 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public const string RankUpAnnouncementText = "Rank Up!";
+    public const string BossLevelAnnouncementText = "Cheeramid Incoming!";
+    public const string BossLevelAnnouncementSubText = "Prepare Yourself!";
+
     [SerializeField] private GameObject gameOverMenu = null;
     [SerializeField] private GameObject pauseMenuItems2 = null;
     [SerializeField] private GameObject pauseMenuItems3 = null;
-
+    [SerializeField] private Text announcementText = null;
+    [SerializeField] private Text announcementSubText = null;
     private void Awake()
     {
         GameManager.OnGameOver += DisplayGameOver;
+        GameManager.OnRankChanged += DisplayRankUpAnnouncement;
+    }
+
+    public void DisableGameOver()
+    {
+        gameOverMenu.SetActive(false);
+    }
+
+    private void DisplayRankUpAnnouncement(Rank newRank)
+    {
+        announcementText.text = RankUpAnnouncementText;
+        announcementSubText.text = newRank.rankName;
+
+        StartCoroutine(DisplayAnnouncement());
+    }
+
+    private IEnumerator DisplayAnnouncement()
+    {
+        float alpha = 0.0F;
+        float time = 1.0F;
+        announcementText.color = new Color(announcementText.color.r, announcementText.color.g, announcementText.color.b, alpha);
+        announcementSubText.color = new Color(announcementSubText.color.r, announcementSubText.color.g, announcementSubText.color.b, alpha);
+
+        announcementText.gameObject.SetActive(true);
+        announcementSubText.gameObject.SetActive(true);
+
+        while (alpha < 1.0f)
+        {
+            alpha += (Time.deltaTime / time);
+            announcementText.color = new Color(announcementText.color.r, announcementText.color.g, announcementText.color.b, alpha);
+            announcementSubText.color = new Color(announcementSubText.color.r, announcementSubText.color.g, announcementSubText.color.b, alpha);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(1.5F);
+
+        alpha = 1.0F;
+        while (alpha > 0.0f)
+        {
+            alpha -= (Time.deltaTime / time);
+            announcementText.color = new Color(announcementText.color.r, announcementText.color.g, announcementText.color.b, alpha);
+            announcementSubText.color = new Color(announcementSubText.color.r, announcementSubText.color.g, announcementSubText.color.b, alpha);
+            yield return null;
+        }
+
+        announcementText.gameObject.SetActive(false);
+        announcementSubText.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -75,7 +129,7 @@ public class UIManager : MonoBehaviour
     public void RestartGame()
     {
         DisableGameOver();
-        Rank rank = GameManager.Instance.currentRank;
+        Rank rank = GameManager.Instance.CurrentRank;
         if (rank.gameMode == GameMode.Normal)
         {
             GameManager.Instance.StartGameFromNormal();
@@ -100,10 +154,5 @@ public class UIManager : MonoBehaviour
     public void DisplayGameOver()
     {
         gameOverMenu.SetActive(true);
-    }
-
-    public void DisableGameOver()
-    {
-        gameOverMenu.SetActive(false);
     }
 }

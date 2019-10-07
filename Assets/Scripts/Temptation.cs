@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using PolarCoordinates;
 
 public class Temptation : MonoBehaviour
 {
@@ -12,9 +10,23 @@ public class Temptation : MonoBehaviour
     public float trajectoryAngleVariance = 10f;
     private float trajectoryOffsetAngle;
 
+    private Camera mainCamera = null;
+    [SerializeField] private ParticleSystem particlesToShowOnDestroy;
+
     private void Awake()
     {
-        this.GetRandomMoveSpeedAndTrajectory();   
+        RankTimer.OnTimeInRankCompleted += DestroyTemptation;
+        this.GetRandomMoveSpeedAndTrajectory();
+    }
+
+    private void Start()
+    {
+        mainCamera = Camera.main;
+    }
+
+    private void OnDestroy()
+    {
+        RankTimer.OnTimeInRankCompleted -= DestroyTemptation;
     }
 
     private void GetRandomMoveSpeedAndTrajectory()
@@ -43,6 +55,13 @@ public class Temptation : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
+        bool onScreen = screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
+        if (onScreen == false || hitPoints <= 0)
+        {
+            return;
+        }
+
         if (other.tag == "Player")
         {
             this.DamagePlayer();
@@ -65,13 +84,21 @@ public class Temptation : MonoBehaviour
 
         if (this.hitPoints <= 0)
         {
-            this.DestroyTemptation();
+            DestroyTemptation();
         } 
     }
 
     private void DestroyTemptation()
     {
-        //Do temptation destroy vfx/sounds here  
+        this.moveSpeed = 0;
+        StartCoroutine(PlayEffectsAndDestroy());
+    }
+
+    private IEnumerator PlayEffectsAndDestroy()
+    {
+        // Do temptation destroy vfx/sounds here
+        particlesToShowOnDestroy.Play();
+        yield return new WaitForSeconds(0.2F);
         Destroy(this.gameObject);
     }
 }

@@ -20,7 +20,7 @@ public class Spawner : MonoBehaviour
         GameManager.OnLevelStarted += StartSpawner;
         GameManager.OnLevelContinued += StartSpawner;
         GameManager.OnGameOver += StopSpawner;
-        RankTimer.OnNextRankReached += StopSpawner;
+        RankTimer.OnTimeInRankCompleted += StopSpawner;
     }
 
     public void StartSpawner()
@@ -30,8 +30,8 @@ public class Spawner : MonoBehaviour
         {
             StopSpawner();
         }
-        spawnTemptations = SpawnTemptations();
-        StartCoroutine(spawnTemptations);
+
+        StartCoroutine(SpawnTemptations());
     }
 
     private void ResetSpawner()
@@ -72,10 +72,7 @@ public class Spawner : MonoBehaviour
 
     public void StopSpawner()
     {
-        if (spawnTemptations != null)
-        {
-            StopCoroutine(spawnTemptations);
-        }
+        StopAllCoroutines();
     }
 
     private void OnDestroy()
@@ -83,7 +80,7 @@ public class Spawner : MonoBehaviour
         GameManager.OnLevelStarted -= StartSpawner;
         GameManager.OnLevelContinued -= StartSpawner;
         GameManager.OnGameOver -= StopSpawner;
-        RankTimer.OnNextRankReached -= StopSpawner;
+        RankTimer.OnTimeInRankCompleted -= StopSpawner;
     }
 }
 
