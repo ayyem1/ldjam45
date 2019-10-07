@@ -1596,8 +1596,8 @@ RectTransform:
   m_Father: {fileID: 1735351988}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.39743578, y: 0.021317352}
-  m_AnchorMax: {x: 0.602564, y: 0.06687545}
+  m_AnchorMin: {x: 0.39742985, y: 0.021317352}
+  m_AnchorMax: {x: 0.56062675, y: 0.06687545}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2533,7 +2533,7 @@ MonoBehaviour:
   sentryCooldownInSeconds: 0.1
   ammoAmount: 50
   launchPoint: {fileID: 620779250}
-  kiBlastPrefabToSpawn: {fileID: 2976131355030668757, guid: 08942bdc4de781a43b03269f187ef3e7,
+  kiBlastPrefabToSpawn: {fileID: 3988205914616140603, guid: 1bf7cd307126ed84baefcae5dc06fe2b,
     type: 3}
 --- !u!64 &752062801
 MeshCollider:
@@ -3824,7 +3824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sentry: {fileID: 752062800}
-  currentPlayerHealth: 0
+  currentRank: {fileID: 0}
   finalPlayerPosition: {x: -0.23, y: 57.61, z: -140.49}
   maximumAmmoCount: 100
   rankTimer: {fileID: 971532967}
