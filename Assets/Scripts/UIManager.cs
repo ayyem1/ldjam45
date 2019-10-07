@@ -2,11 +2,16 @@
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private GameObject gameOverScreen = null;
+    [SerializeField] private GameObject gameOverMenu = null;
     private void Awake()
     {
         GameManager.OnGameOver += DisplayGameOver;
     }
+
+    //private void Update()
+    //{
+    //    if (Input.get)
+    //}
 
     private void OnDestroy()
     {
@@ -35,11 +40,11 @@ public class UIManager : MonoBehaviour
 
     public void DisplayGameOver()
     {
-        gameOverScreen.SetActive(true);
+        gameOverMenu.SetActive(true);
     }
 
     public void DisableGameOver()
     {
-        gameOverScreen.SetActive(false);
+        gameOverMenu.SetActive(false);
     }
 }
