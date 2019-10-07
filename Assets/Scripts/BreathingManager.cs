@@ -56,7 +56,7 @@ public class BreathingManager : MonoBehaviour
 
     }
 
-    private void OnGameOver()
+    private void OnGameOver(bool wasGameWon)
     {
         Metronome.metronomePaused = true;
     }

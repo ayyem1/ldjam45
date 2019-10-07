@@ -24,9 +24,14 @@ public class Spawner : MonoBehaviour
         {
             GameManager.OnLevelStarted += StartSpawner;
             GameManager.OnLevelContinued += StartSpawner;
-            GameManager.OnGameOver += StopSpawner;
+            GameManager.OnGameOver += OnGameOver;
             RankTimer.OnTimeInRankCompleted += StopSpawner;
         }
+    }
+
+    private void OnGameOver(bool wasGameWon)
+    {
+        StopSpawner();
     }
 
     public void StartTutorialSpawner()
@@ -112,7 +117,7 @@ public class Spawner : MonoBehaviour
     {
         GameManager.OnLevelStarted -= StartSpawner;
         GameManager.OnLevelContinued -= StartSpawner;
-        GameManager.OnGameOver -= StopSpawner;
+        GameManager.OnGameOver -= OnGameOver;
         RankTimer.OnTimeInRankCompleted -= StopSpawner;
     }
 }

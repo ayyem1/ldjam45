@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cheerymid
   m_EditorClassIdentifier: 
   rankDurationInSeconds: 60
-  rankName: CHEERY-MID!
+  rankName: CHEERAMID!
   nextRank: {fileID: 11400000, guid: 53608bd68482e154fa0a9c394601fd40, type: 2}
   gameMode: 0
   difficulty: {fileID: 11400000, guid: b9623971679e95b43905fae5735b071f, type: 2}

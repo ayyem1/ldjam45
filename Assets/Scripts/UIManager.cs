@@ -25,10 +25,30 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.OnGameOver += DisplayGameOver;
+        GameManager.OnGameOver += OnGameOver;
         GameManager.OnRankChanged += DisplayRankUpAnnouncement;
         GameManager.OnBossSpawned += DisplayBossAnnouncement;
         Temptation.OnBossDied += DisplayVictory;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.OnGameOver -= OnGameOver;
+        GameManager.OnRankChanged -= DisplayRankUpAnnouncement;
+        GameManager.OnBossSpawned -= DisplayBossAnnouncement;
+        Temptation.OnBossDied -= DisplayVictory;
+    }
+
+    private void OnGameOver(bool wasGameWon)
+    {
+        if (wasGameWon == true)
+        {
+            DisplayVictory();
+        }
+        else
+        {
+            DisplayGameOver();
+        }
     }
 
     public void DisableGameOver()
@@ -137,17 +157,13 @@ public class UIManager : MonoBehaviour
         return pauseMenuItems2.activeInHierarchy || pauseMenuItems3.activeInHierarchy;
     }
 
-    private void OnDestroy()
-    {
-        GameManager.OnGameOver -= DisplayGameOver;
-    }
-
     public void RestartGame()
     {
         this.clickSound.Play();
 
         DisableGameOver();
         ContinueGame();
+        DisableVictory();
         Rank rank = GameManager.Instance.CurrentRank;
         if (rank.gameMode == GameMode.Normal)
         {
@@ -186,6 +202,7 @@ public class UIManager : MonoBehaviour
         CutsceneManager.StartCutscene();
         GameManager.Instance.StartGameFromTutorial();
         DisableGameOver();
+        DisableVictory();
         Color titleImageColor = this.titleImage.color;
         this.titleImage.color = new Color(titleImageColor.r, titleImageColor.g, titleImageColor.b, 1.0f);
         ContinueGame();
