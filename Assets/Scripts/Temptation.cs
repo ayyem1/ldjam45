@@ -1,13 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Temptation : MonoBehaviour
 {
+    public static Action OnBossDied;
     private float moveSpeed;
     private Vector3 moveTrajectory;
     public int hitPoints; //1 for normal temptations, 5 for elite temptations
 
     public float trajectoryAngleVariance = 10f;
+    private bool isBoss = false;
     private float trajectoryOffsetAngle;
 
     public AudioSource poppingSound;
@@ -25,6 +28,8 @@ public class Temptation : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
+        Rank rank = GameManager.Instance.CurrentRank;
+        isBoss = rank == null ? false : rank.isBoss;
     }
 
     private void OnDestroy()
@@ -35,7 +40,7 @@ public class Temptation : MonoBehaviour
 
     private void GetRandomMoveSpeedAndTrajectory()
     {
-        this.moveSpeed = Random.Range(GameManager.Instance.Difficulty.minTemptationSpeed, GameManager.Instance.Difficulty.maxTemptationSpeed);
+        this.moveSpeed = UnityEngine.Random.Range(GameManager.Instance.Difficulty.minTemptationSpeed, GameManager.Instance.Difficulty.maxTemptationSpeed);
         this.moveTrajectory = (GameManager.Instance.finalPlayerPosition - this.transform.position).normalized;
         this.moveTrajectory.z = 0.0F;
     }
@@ -89,13 +94,18 @@ public class Temptation : MonoBehaviour
     private void DestroyTemptation()
     {
         this.moveSpeed = 0;
+        if (isBoss)
+        {
+            OnBossDied();
+        }
+
         StartCoroutine(PlayEffectsAndDestroy());
     }
 
     private IEnumerator PlayEffectsAndDestroy()
     {
         // Do temptation destroy vfx/sounds here
-        float pitch = Random.Range(-0.1f, 0.1f);
+        float pitch = UnityEngine.Random.Range(-0.1f, 0.1f);
         this.poppingSound.pitch = this.poppingSound.pitch + pitch;
         this.poppingSound.Play();
         particlesToShowOnDestroy.Play();

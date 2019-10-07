@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour
     {
         GameManager.OnGameOver += DisplayGameOver;
         GameManager.OnRankChanged += DisplayRankUpAnnouncement;
+        GameManager.OnBossSpawned += DisplayBossAnnouncement;
     }
 
     public void DisableGameOver()
@@ -36,6 +37,13 @@ public class UIManager : MonoBehaviour
         announcementText.text = RankUpAnnouncementText;
         announcementSubText.text = newRank.rankName;
 
+        StartCoroutine(DisplayAnnouncement());
+    }
+
+    private void DisplayBossAnnouncement()
+    {
+        announcementText.text = BossLevelAnnouncementText;
+        announcementSubText.text = BossLevelAnnouncementSubText;
         StartCoroutine(DisplayAnnouncement());
     }
 

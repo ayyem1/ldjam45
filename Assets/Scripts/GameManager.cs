@@ -11,6 +11,7 @@ public sealed class GameManager : MonoBehaviour
     public static Action OnGameOver;
     public static Action PlayerDamaged;
     public static Action<Rank> OnRankChanged;
+    public static Action OnBossSpawned;
 
     public static GameManager Instance
     {
@@ -102,7 +103,12 @@ public sealed class GameManager : MonoBehaviour
         }
 
         rankTimer.PauseTimer();
-        PauseGameToBreathe();
+        StartCoroutine(CompleteRank());
+    }
+
+    private IEnumerator CompleteRank()
+    {
+        yield return new WaitForSeconds(1.0F);
         bool isLevelComplete = CurrentRank.nextRank.gameMode == GameMode.HighScore;
         if (isLevelComplete)
         {
@@ -112,6 +118,7 @@ public sealed class GameManager : MonoBehaviour
         {
             SetNextRankInLevel(CurrentRank.nextRank, false);
         }
+        PauseGameToBreathe();
     }
 
     private void SetFirstRankInLevel(Rank newRank, bool isFirstLoadedRank)
@@ -256,10 +263,16 @@ public sealed class GameManager : MonoBehaviour
     
     private IEnumerator PauseToBreathe()
     {
-        yield return new WaitForSeconds(breathPauseInSeconds);
-        // IS CurrentRank a boss.
-        // turn on boss announcement.
-        // Activate boss spawner.
+        // Wait for 2/3s of the time.
+        yield return new WaitForSeconds(2 * breathPauseInSeconds / 3);
+
+        if (this.CurrentRank.isBoss == true)
+        {
+            OnBossSpawned?.Invoke();
+        }
+
+        // Then wait for the remaining 1/3 of the time.
+        yield return new WaitForSeconds(breathPauseInSeconds / 3);
 
         if (this.CurrentRank.isBoss == true)
         {
