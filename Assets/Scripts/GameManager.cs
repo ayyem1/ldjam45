@@ -122,6 +122,10 @@ public sealed class GameManager : MonoBehaviour
         isGamePausedForBreadth = false;
         rankTimer.RestartTimer();
         OnLevelStarted?.Invoke();
+        if (Metronome.metronomeStarted == false)
+        {
+            StartCoroutine(Metronome.StartMetronome());
+        }
     }
 
     public void PauseGameForBreadth()
