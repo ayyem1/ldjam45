@@ -9,6 +9,7 @@ public sealed class GameManager : MonoBehaviour
     public static Action OnLevelContinued;
     public static Action OnGameStarted;
     public static Action OnGameOver;
+    public static Action PlayerDamaged;
 
     public static GameManager Instance
     {
@@ -159,6 +160,7 @@ public sealed class GameManager : MonoBehaviour
         else
         {
             currentPlayerHealth -= damageAmount;
+            PlayerDamaged?.Invoke();
         }
     }
 
