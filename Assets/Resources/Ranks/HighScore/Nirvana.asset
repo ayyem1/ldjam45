@@ -16,3 +16,4 @@ MonoBehaviour:
   rankName: Nirvana
   nextRank: {fileID: 0}
   gameMode: 1
+  difficulty: {fileID: 11400000, guid: 7dfdc6a383ae7934392048a88dea6b7c, type: 2}

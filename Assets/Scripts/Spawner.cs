@@ -19,6 +19,7 @@ public class Spawner : MonoBehaviour
     {
         GameManager.OnLevelStarted += StartSpawner;
         GameManager.OnLevelContinued += StartSpawner;
+        GameManager.OnGameOver += StopSpawner;
         RankTimer.OnNextRankReached += StopSpawner;
     }
 
@@ -35,7 +36,7 @@ public class Spawner : MonoBehaviour
 
     private void ResetSpawner()
     {
-        Difficulty difficulty = GameManager.Instance.difficulty;
+        Difficulty difficulty = GameManager.Instance.Difficulty;
         secondsBetweenSpawnAttempt = Random.Range(difficulty.minSecondsBetweenSpawns, difficulty.maxSecondsBetweenSpawns);
         probabiltyOfSpawnSuccess = Random.Range(difficulty.minChanceToSpawnSuccessfully, difficulty.minChanceToSpawnSuccessfully);
         probabilityOfEliteSpawn = Random.Range(difficulty.minChanceToSpawnElite, difficulty.maxChanceToSpawnElite);
@@ -43,7 +44,7 @@ public class Spawner : MonoBehaviour
 
     public IEnumerator SpawnTemptations()
     {
-        Difficulty difficulty = GameManager.Instance.difficulty;
+        Difficulty difficulty = GameManager.Instance.Difficulty;
 
         while (true)
         {
@@ -80,6 +81,8 @@ public class Spawner : MonoBehaviour
     private void OnDestroy()
     {
         GameManager.OnLevelStarted -= StartSpawner;
+        GameManager.OnLevelContinued -= StartSpawner;
+        GameManager.OnGameOver -= StopSpawner;
         RankTimer.OnNextRankReached -= StopSpawner;
     }
 }
