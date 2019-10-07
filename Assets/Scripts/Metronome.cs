@@ -53,4 +53,10 @@ public static class Metronome
     {
         Metronome.metronomePaused = !Metronome.metronomePaused;
     }
+
+    public static void UpdateMetronomeTempo(float newBeatsPerMinute)
+    {
+        Metronome.beatsPerMinute = newBeatsPerMinute;
+        Metronome.secondsBetweenBeats = 60.0f / Metronome.beatsPerMinute;
+    }
 }

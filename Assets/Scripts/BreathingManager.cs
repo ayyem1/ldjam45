@@ -74,9 +74,14 @@ public class BreathingManager : MonoBehaviour
                 this.SetCalibrationAverage();
             }
 
+            if (GameManager.Instance.isGameActive == false &&  GameManager.Instance.tutorialStarted == false)
+            {
+                return;
+            }
+
             this.adjustedInputTimestamp = AudioSettings.dspTime;
 
-            if (GameManager.Instance.tutorialStarted == true && this.IsMostRecentInputOnBeat() == true)
+            if (this.IsMostRecentInputOnBeat() == true)
             {
                 this.BreathSuccess();
             }
@@ -148,7 +153,7 @@ public class BreathingManager : MonoBehaviour
 
     private void PlayClickSound()
     {
-        //this.clickSound.PlayScheduled(Metronome.currentBeatTime);
+        this.clickSound.PlayScheduled(Metronome.currentBeatTime);
         StartCoroutine(this.DetectBreathMiss());
     }
 

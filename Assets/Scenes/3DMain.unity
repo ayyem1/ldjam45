@@ -5395,7 +5395,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8b2799933b6a71a48bced5813eaf7b17, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -14874,6 +14874,7 @@ MonoBehaviour:
   announcementSubText: {fileID: 953213319}
   ammoBar: {fileID: 590357839}
   sentryArc: {fileID: 1266272402}
+  titleImage: {fileID: 1813155944}
   introCutsceneAnimator: {fileID: 963194235}
   clickSound: {fileID: 1735351990}
 --- !u!82 &1735351990

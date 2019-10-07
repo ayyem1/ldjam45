@@ -141,7 +141,10 @@ public class UIManager : MonoBehaviour
 
     public void RestartGame()
     {
+        this.clickSound.Play();
+
         DisableGameOver();
+        ContinueGame();
         Rank rank = GameManager.Instance.CurrentRank;
         if (rank.gameMode == GameMode.Normal)
         {
@@ -156,7 +159,6 @@ public class UIManager : MonoBehaviour
     public void ToMainMenu()
     {
         this.clickSound.Play();
-
         this.ammoBar.SetActive(false);
         GameManager.Instance.sentry.gameObject.SetActive(false);
         sentryArc.SetActive(false);
@@ -183,6 +185,7 @@ public class UIManager : MonoBehaviour
         DisableGameOver();
         Color titleImageColor = this.titleImage.color;
         this.titleImage.color = new Color(titleImageColor.r, titleImageColor.g, titleImageColor.b, 1.0f);
+        ContinueGame();
     }
 
     public void ExitGame()

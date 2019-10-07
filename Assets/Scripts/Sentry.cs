@@ -64,7 +64,7 @@ public class Sentry : MonoBehaviour
             isSentryCoolingDown = true;
 
             float pitch = UnityEngine.Random.Range(-0.1f, 0.1f);
-            this.shootingSound.pitch = this.shootingSound.pitch + pitch;
+            this.shootingSound.pitch = Mathf.Clamp(this.shootingSound.pitch + pitch, -0.3f, 1.7f);
 
             this.shootingSound.Play();
         }
