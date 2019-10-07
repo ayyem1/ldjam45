@@ -14,7 +14,6 @@ public class Temptation : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Transform on Awake: " + transform.position);
         this.GetRandomMoveSpeedAndTrajectory();   
     }
 
@@ -40,7 +39,6 @@ public class Temptation : MonoBehaviour
         newPosition.y += moveAmount.y;
         //newPosition.z += moveAmount.z;
         transform.position = newPosition;
-        Debug.Log("Move Trajectory: " + moveTrajectory + " Position: " + transform.position);
     }
 
     private void OnTriggerEnter(Collider other)
