@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void ToMainMenu()
+    public void ToMainMenu()
     {
         Debug.Log("To Main Menu.");
         DisableGameOver();
