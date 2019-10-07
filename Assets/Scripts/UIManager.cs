@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public static Action OnMainMenu;
     public const string RankUpAnnouncementText = "Rank Up!";
     public const string BossLevelAnnouncementText = "Cheeramid Incoming!";
     public const string BossLevelAnnouncementSubText = "Prepare Yourself!";
@@ -180,6 +182,7 @@ public class UIManager : MonoBehaviour
     public void ToMainMenu()
     {
         this.clickSound.Play();
+        OnMainMenu?.Invoke();
         this.ammoBar.SetActive(false);
         GameManager.Instance.sentry.gameObject.SetActive(false);
         sentryArc.SetActive(false);
