@@ -7,6 +7,7 @@ public sealed class GameManager : MonoBehaviour
 {
     public static Action OnLevelStarted;
     public static Action OnLevelContinued;
+    public static Action OnGameStarted;
     public static Action OnGameOver;
 
     public static GameManager Instance
@@ -131,6 +132,11 @@ public sealed class GameManager : MonoBehaviour
         isGameActive = true;
         currentPlayerHealth = startingPlayerHealth;
         SetFirstRankInLevel(initialRank);
+        if (OnGameStarted != null)
+        {
+            OnGameStarted();
+        }
+
         PauseGameToBreathe();
     }
 
@@ -139,6 +145,7 @@ public sealed class GameManager : MonoBehaviour
         isGameActive = true;
         currentPlayerHealth = startingPlayerHealth;
         SetFirstRankInLevel(FindFirstHighScoreLevel());
+        OnGameStarted?.Invoke();
         PauseToBreathe();
     }
 

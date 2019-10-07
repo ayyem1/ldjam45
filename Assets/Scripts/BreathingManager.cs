@@ -32,7 +32,25 @@ public class BreathingManager : MonoBehaviour
     {
         this.calibrationKeys = new List<double>();
         Metronome.OnBeat += this.PlayClickSound;
+        GameManager.OnGameStarted += OnGameStarted;
+        GameManager.OnGameOver += OnGameOver;
+    }
+
+    private void OnDestroy()
+    {
+        Metronome.OnBeat -= this.PlayClickSound;
+        GameManager.OnGameStarted -= OnGameStarted;
+        GameManager.OnGameOver -= OnGameOver;
+    }
+
+    private void OnGameStarted()
+    {
         StartCoroutine(Metronome.StartMetronome());
+    }
+
+    private void OnGameOver()
+    {
+        StopAllCoroutines();
     }
 
     public void Update()

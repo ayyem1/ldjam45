@@ -33,7 +33,7 @@ public static class Metronome
                 if (Metronome.OnBeat != null)
                 {
                     Metronome.OnBeat();
-                }  
+                }
             }
 
             yield return null;
