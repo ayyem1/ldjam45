@@ -49,8 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitPoints: 1
   trajectoryAngleVariance: 3
-  particlesToShowOnDestroy: {fileID: 2090798767435841491, guid: 474fac8f4ddee5f48a8b50f6a9526659,
-    type: 3}
+  particlesToShowOnDestroy: {fileID: 6605455526378432571}
 --- !u!135 &8016856982922238696
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -243,11 +242,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Small Burst
       objectReference: {fileID: 0}
-    - target: {fileID: 2090798767435841491, guid: 474fac8f4ddee5f48a8b50f6a9526659,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2090798767435841488, guid: 474fac8f4ddee5f48a8b50f6a9526659,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -305,44 +299,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2090798767435841489, guid: 474fac8f4ddee5f48a8b50f6a9526659,
         type: 3}
-      propertyPath: InitialModule.startColor.maxColor.r
-      value: 0.80563927
-      objectReference: {fileID: 0}
-    - target: {fileID: 2090798767435841489, guid: 474fac8f4ddee5f48a8b50f6a9526659,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2090798767435841489, guid: 474fac8f4ddee5f48a8b50f6a9526659,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2090798767435841489, guid: 474fac8f4ddee5f48a8b50f6a9526659,
-        type: 3}
       propertyPath: lengthInSec
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2090798767435841489, guid: 474fac8f4ddee5f48a8b50f6a9526659,
-        type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 0.4
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 2090798767435841489, guid: 474fac8f4ddee5f48a8b50f6a9526659,
         type: 3}
       propertyPath: InitialModule.startSpeed.scalar
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2090798767435841489, guid: 474fac8f4ddee5f48a8b50f6a9526659,
-        type: 3}
-      propertyPath: looping
-      value: 0
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 474fac8f4ddee5f48a8b50f6a9526659, type: 3}
 --- !u!4 &6605455526378432570 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2090798767435841488, guid: 474fac8f4ddee5f48a8b50f6a9526659,
+    type: 3}
+  m_PrefabInstance: {fileID: 5093369603136624618}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6605455526378432571 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2090798767435841489, guid: 474fac8f4ddee5f48a8b50f6a9526659,
     type: 3}
   m_PrefabInstance: {fileID: 5093369603136624618}
   m_PrefabAsset: {fileID: 0}

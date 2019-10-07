@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Temptation : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class Temptation : MonoBehaviour
     private float trajectoryOffsetAngle;
 
     private Camera mainCamera = null;
-    [SerializeField] private GameObject particlesToShowOnDestroy = null;
+    [SerializeField] private ParticleSystem particlesToShowOnDestroy;
 
     private void Awake()
     {
@@ -49,7 +50,7 @@ public class Temptation : MonoBehaviour
     {
         Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
         bool onScreen = screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
-        if (onScreen == false)
+        if (onScreen == false || hitPoints <= 0)
         {
             return;
         }
@@ -76,14 +77,16 @@ public class Temptation : MonoBehaviour
 
         if (this.hitPoints <= 0)
         {
-            this.DestroyTemptation();
+            this.moveSpeed = 0;
+            StartCoroutine(DestroyTemptation());
         } 
     }
 
-    private void DestroyTemptation()
+    private IEnumerator DestroyTemptation()
     {
-        //Do temptation destroy vfx/sounds here
-        particlesToShowOnDestroy.SetActive(true);
+        // Do temptation destroy vfx/sounds here
+        particlesToShowOnDestroy.Play();
+        yield return new WaitForSeconds(0.25F);
         Destroy(this.gameObject);
     }
 }
