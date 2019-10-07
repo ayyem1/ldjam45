@@ -5468,6 +5468,7 @@ MonoBehaviour:
   ammoAmount: 10
   playerDamagedSound: {fileID: 963194244}
   rankUpSound: {fileID: 963194237}
+  bossDiedSound: {fileID: 963194237}
   bossSpawner: {fileID: 1365179269}
 --- !u!82 &963194231
 AudioSource:

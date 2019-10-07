@@ -60,6 +60,7 @@ public sealed class GameManager : MonoBehaviour
 
     public AudioSource playerDamagedSound;
     public AudioSource rankUpSound;
+    public AudioSource bossDiedSound;
 
     public Spawner bossSpawner;
 
@@ -165,6 +166,7 @@ public sealed class GameManager : MonoBehaviour
         rankTimer.PauseTimer();
         rankTimer.slider.value = rankTimer.slider.maxValue;
         OnGameOver?.Invoke(true);
+        this.bossDiedSound.Play();
     }
 
     private void Start()

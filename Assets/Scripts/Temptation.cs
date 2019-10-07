@@ -14,7 +14,6 @@ public class Temptation : MonoBehaviour
     private float trajectoryOffsetAngle;
     [SerializeField] private int damageAmount = 1;
     public AudioSource poppingSound;
-    public AudioSource bossDiedSound;
 
     private Camera mainCamera = null;
     [SerializeField] private ParticleSystem particlesToShowOnDestroy;
@@ -119,10 +118,6 @@ public class Temptation : MonoBehaviour
         if (isBoss)
         {
             OnBossDied();
-            if (this.bossDiedSound != null)
-            {
-                this.bossDiedSound.Play();
-            }
         }
 
         StartCoroutine(PlayEffectsAndDestroy());
