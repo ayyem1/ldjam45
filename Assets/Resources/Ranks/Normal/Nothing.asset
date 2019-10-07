@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ddefd8e0559b7e42a8b775d359b23a4, type: 3}
   m_Name: Nothing
   m_EditorClassIdentifier: 
-  rankDurationInSeconds: 10
+  rankDurationInSeconds: 30
   rankName: Nothing
-  nextRank: {fileID: 11400000, guid: 63c2cbe205072ac4d8cf4f1a65ae89d1, type: 2}
+  nextRank: {fileID: 11400000, guid: e554c0d50a1625d469ac29f0ccf500a6, type: 2}
   gameMode: 0
-  difficulty: {fileID: 11400000, guid: 7cefca307efb2a1428bd172db5755f4d, type: 2}
+  difficulty: {fileID: 11400000, guid: 1ad4ec1a8c51f554da7ef36529c671d6, type: 2}
   isBoss: 0
