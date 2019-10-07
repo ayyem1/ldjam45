@@ -3,7 +3,8 @@
 	Properties
 	{
 		_MainTex("Texture", 2D) = "white" {}
-		_Amplitude("Amplitude", Range(0, 10)) = 5
+		_Frequency("Frequency", Float) = 5
+		_Amplitude("Amplitude", Float) = 5
 	}
 	SubShader
 	{
@@ -35,6 +36,7 @@
 
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
+			float _Frequency;
 			float _Amplitude;
 			
 			//This is faster than NormalShader, because we are doing all of our calculations per-vertex rather than per-fragment
@@ -50,8 +52,8 @@
 				float3 clampedNormal = v.normal * 0.5 + 0.5; //Clamp between 0 and 1
 
 				o.color = float4(clampedNormal, 0.0) * float4(diffuse, 1.0);
-				o.vertex.x += sin(o.uv.x * _Amplitude + _Time.w);
-				o.vertex.x += sin(o.uv.y * _Amplitude + _Time.w);
+				//o.vertex.x += sin(o.uv.x * _Frequency + _Time.w) * _Amplitude;
+				o.vertex.y += sin(o.uv.y * _Frequency + _Time.w) * _Amplitude;
 				
 				return o;
 			}

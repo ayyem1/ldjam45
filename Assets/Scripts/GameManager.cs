@@ -180,6 +180,10 @@ public sealed class GameManager : MonoBehaviour
     {
         rankTimer.RestartTimer();
         OnLevelStarted?.Invoke();
+        if (Metronome.metronomeStarted == false)
+        {
+            StartCoroutine(Metronome.StartMetronome());
+        }
     }
 
     private void PauseGameToBreathe()
