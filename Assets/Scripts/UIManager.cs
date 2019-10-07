@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
         GameManager.OnGameOver += DisplayGameOver;
         GameManager.OnRankChanged += DisplayRankUpAnnouncement;
         GameManager.OnBossSpawned += DisplayBossAnnouncement;
+        Temptation.OnBossDied += DisplayVictory;
     }
 
     public void DisableGameOver()
@@ -109,8 +110,6 @@ public class UIManager : MonoBehaviour
         }
 
         pauseMenuItems2.SetActive(false);
-        pauseMenuItems3.SetActive(false);
-
         GameManager.Instance.isGameActive = true;
         Time.timeScale = 1.0F;
         Metronome.metronomePaused = false;
@@ -123,15 +122,7 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        if (GameManager.Instance.isGameActive)
-        {
-            pauseMenuItems3.SetActive(true);
-        }
-        else
-        {
-            pauseMenuItems2.SetActive(true);
-        }
-
+        pauseMenuItems2.SetActive(true);
         GameManager.Instance.isGameActive = false;
         Time.timeScale = 0.0F;
         Metronome.ToggleMetronomePause();

@@ -7,7 +7,7 @@ public class RankTimer : MonoBehaviour
 {
     public static Action OnTimeInRankCompleted;
 
-    [SerializeField] private Slider slider = null;
+    [SerializeField] public Slider slider = null;
     [SerializeField] private GameObject[] rankNotches = null;
     [SerializeField] private RectTransform sliderFillArea = null;
 

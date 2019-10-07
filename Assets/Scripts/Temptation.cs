@@ -12,7 +12,7 @@ public class Temptation : MonoBehaviour
     public float trajectoryAngleVariance = 10f;
     private bool isBoss = false;
     private float trajectoryOffsetAngle;
-
+    [SerializeField] private int damageAmount = 1;
     public AudioSource poppingSound;
 
     private Camera mainCamera = null;
@@ -77,7 +77,7 @@ public class Temptation : MonoBehaviour
 
     private void DamagePlayer()
     {
-        GameManager.Instance.DamagePlayer(1);
+        GameManager.Instance.DamagePlayer(damageAmount);
         Destroy(this.gameObject);
     }
 

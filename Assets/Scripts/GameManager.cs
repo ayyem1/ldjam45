@@ -77,6 +77,7 @@ public sealed class GameManager : MonoBehaviour
         }
 
         RankTimer.OnTimeInRankCompleted += OnNextRankReached;
+        Temptation.OnBossDied += OnBossDied;
     }
 
     private void OnHit()
@@ -154,6 +155,14 @@ public sealed class GameManager : MonoBehaviour
         Difficulty = CurrentRank.difficulty;
     }
 
+    private void OnBossDied()
+    {
+        isGameActive = false;
+        rankTimer.PauseTimer();
+        rankTimer.slider.value = rankTimer.slider.maxValue;
+        OnGameOver?.Invoke();
+    }
+
     private void Start()
     {
         // TODO: Pull from player storage here.
@@ -226,6 +235,7 @@ public sealed class GameManager : MonoBehaviour
                 rankTimer.PauseTimer();
                 isGameActive = false;
                 OnGameOver?.Invoke();
+                // Need to set the sentry to be disabled.
             }
         }
 
@@ -311,7 +321,7 @@ public sealed class GameManager : MonoBehaviour
     {
         if (CurrentRank == null || CurrentRank.gameMode != GameMode.Normal)
         {
-            throw new System.Exception("Attempted to get ranks for non-normal game mode. High score game mode only has one rank per level.");
+            throw new System.Exception("Attempted to get ranks for non-normal fmode. High score game mode only has one rank per level.");
         }
 
         IList<Rank> ranks = new List<Rank>();
