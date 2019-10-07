@@ -161,9 +161,8 @@ public class UIManager : MonoBehaviour
         introCutsceneAnimator.SetBool("MainMenuClicked", true);
         introCutsceneAnimator.SetBool("InitiatedGame", false);
         introCutsceneAnimator.SetBool("SufficientlyCalibrated", false);
-        CutsceneManager.isFirstSpacebarHit = true;
-        CutsceneManager.isCutsceneStarted = true;
         BreathingManager.calibrationKeys.Clear();
+        CutsceneManager.calibrated = false;
         if (Metronome.metronomeStarted == false)
         {
             StartCoroutine(Metronome.StartMetronome());
@@ -172,6 +171,8 @@ public class UIManager : MonoBehaviour
         {
             Metronome.ToggleMetronomePause();
         }
+
+        CutsceneManager.StartCutscene();
         GameManager.Instance.StartGameFromTutorial();
         DisableGameOver();
     }

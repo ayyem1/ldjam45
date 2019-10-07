@@ -12,8 +12,8 @@ public class CutsceneManager : MonoBehaviour
     public Spawner tutorialSpawner;
     public static bool isCutsceneStarted = false;
 
-    private bool calibrated = false;
-    private bool hasStartedPlayingMusic = false;
+    public static bool calibrated = false;
+    public static bool hasStartedPlayingMusic = false;
     public bool playWoo = false;
     private bool playedWoo = false;
 
@@ -23,7 +23,15 @@ public class CutsceneManager : MonoBehaviour
 
     private void Start()
     {
+        StartCutscene();
+    }
+
+    public static void StartCutscene()
+    {
         isCutsceneStarted = true;
+        calibrated = false;
+        hasStartedPlayingMusic = false;
+        isFirstSpacebarHit = true;
     }
 
     // Update is called once per frame
@@ -52,6 +60,7 @@ public class CutsceneManager : MonoBehaviour
 
         if (calibrated == true && hasStartedPlayingMusic == false)
         {
+            StopAllCoroutines();
             StartCoroutine(AttenuatePartyMusic());
             hasStartedPlayingMusic = true;
         }
