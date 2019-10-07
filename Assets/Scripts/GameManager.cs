@@ -40,8 +40,8 @@ public sealed class GameManager : MonoBehaviour
 
     public Rank currentRank;
     public Vector3 finalPlayerPosition;
+    public bool isGameActive;
     public uint maximumAmmoCount = 100;
-    public bool isGameActive = false;
 
     private static GameManager instance = null;
 
@@ -61,6 +61,11 @@ public sealed class GameManager : MonoBehaviour
         BreathingManager.OnHit += OnHit;
         BreathingManager.OnFail += OnFail;
         RankTimer.OnNextRankReached += OnNextRankReached;
+
+        if (Metronome.metronomeStarted == false)
+        {
+            StartCoroutine(Metronome.StartMetronome());
+        }
     }
 
     private void OnHit()
@@ -128,7 +133,7 @@ public sealed class GameManager : MonoBehaviour
     {
         // TODO: Pull from player storage here.
         // TODO: Delay this after tutorial.
-        StartGameFromNormal();
+        //StartGameFromNormal();
     }
 
     public void StartGameFromNormal()
@@ -199,10 +204,6 @@ public sealed class GameManager : MonoBehaviour
     {
         rankTimer.RestartTimer();
         OnLevelStarted?.Invoke();
-        if (Metronome.metronomeStarted == false)
-        {
-            StartCoroutine(Metronome.StartMetronome());
-        }
     }
 
     private void PauseGameToBreathe()
@@ -257,4 +258,5 @@ public sealed class GameManager : MonoBehaviour
         return ranks;
     }
 
+    
 }

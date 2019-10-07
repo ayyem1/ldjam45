@@ -13,6 +13,7 @@
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
+			#pragma multi_compile_fog
 
 			#include "UnityCG.cginc"
 
@@ -32,6 +33,7 @@
 				float4 vertex : SV_POSITION;
 				float3 normal : NORMAL;
 				float4 color : COLOR;
+				UNITY_FOG_COORDS(1)
 			};
 
 			sampler2D _MainTex;
@@ -54,13 +56,16 @@
 				o.color = float4(clampedNormal, 0.0) * float4(diffuse, 1.0);
 				//o.vertex.x += sin(o.uv.x * _Frequency + _Time.w) * _Amplitude;
 				o.vertex.y += sin(o.uv.y * _Frequency + _Time.w) * _Amplitude;
+				UNITY_TRANSFER_FOG(o, o.vertex);
 				
 				return o;
 			}
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
-				return tex2D(_MainTex, i.uv); //* i.color;
+				fixed4 col = tex2D(_MainTex, i.uv); //* i.color;
+				UNITY_APPLY_FOG(i.fogCoord, col);
+				return col;
 			}
 			ENDCG
 		}

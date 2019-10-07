@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BreathingManager : MonoBehaviour
 {
@@ -17,7 +16,7 @@ public class BreathingManager : MonoBehaviour
 
     public double calibrationValue;
 
-    private List<double> calibrationKeys;
+    public static List<double> calibrationKeys;
 
     private double _rawInputTimestamp = 0;
 
@@ -30,7 +29,7 @@ public class BreathingManager : MonoBehaviour
     #region UnityFunctions
     public void Awake()
     {
-        this.calibrationKeys = new List<double>();
+        BreathingManager.calibrationKeys = new List<double>();
         Metronome.OnBeat += this.PlayClickSound;
         GameManager.OnGameStarted += OnGameStarted;
         GameManager.OnGameOver += OnGameOver;
@@ -57,6 +56,15 @@ public class BreathingManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            if (BreathingManager.calibrationKeys.Count < 20)
+            {
+                double calibrationTimestamp = AudioSettings.dspTime;
+
+                BreathingManager.calibrationKeys.Add(calibrationTimestamp - Metronome.currentBeatTime);
+
+                this.SetCalibrationAverage();
+            }
+
             this.adjustedInputTimestamp = AudioSettings.dspTime;
 
             if (this.IsMostRecentInputOnBeat() == true)
@@ -68,15 +76,6 @@ public class BreathingManager : MonoBehaviour
                 this.BreathFail();
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            double calibrationTimestamp = AudioSettings.dspTime;
-
-            this.calibrationKeys.Add(calibrationTimestamp - Metronome.currentBeatTime);
-
-            this.SetCalibrationAverage();
-        }
     }
     #endregion
 
@@ -84,12 +83,12 @@ public class BreathingManager : MonoBehaviour
     {
         double runningTotal = 0;
 
-        for (int i = 0; i < this.calibrationKeys.Count; i++)
+        for (int i = 0; i < BreathingManager.calibrationKeys.Count; i++)
         {
-            runningTotal += this.calibrationKeys[i];
+            runningTotal += BreathingManager.calibrationKeys[i];
         }
 
-        this.calibrationValue = (runningTotal / this.calibrationKeys.Count);
+        this.calibrationValue = (runningTotal / BreathingManager.calibrationKeys.Count);
     }
 
     #region InputBeatSyncChecks
