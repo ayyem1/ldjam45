@@ -21,15 +21,6 @@ public class Sentry : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetAxis("Fire1") > 0)
-        {
-            if (isSentryCoolingDown == false && ammoAmount > 0)
-            {
-                StartCoroutine(Shoot());
-                isSentryCoolingDown = true;
-            }
-        }
-
         Vector3 toObjectVector = transform.position - mainCamera.transform.position;
         Vector3 linearDistanceVector = Vector3.Project(toObjectVector, Camera.main.transform.forward);
 
@@ -62,6 +53,15 @@ public class Sentry : MonoBehaviour
         vectorToMouse.z += sentryCenter.z;
 
         transform.SetPositionAndRotation(vectorToMouse, rotation);
+    }
+
+    public void FireSentry()
+    {
+        if (isSentryCoolingDown == false && ammoAmount > 0)
+        {
+            StartCoroutine(Shoot());
+            isSentryCoolingDown = true;
+        }
     }
 
     private IEnumerator Shoot()

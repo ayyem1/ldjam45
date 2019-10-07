@@ -36,9 +36,9 @@ public sealed class GameManager : MonoBehaviour
     public Difficulty Difficulty { get; private set; }
 
     [SerializeField] public Sentry sentry = null;
-    public int currentPlayerHealth;
-    public Vector3 finalPlayerPosition;
 
+    public Rank currentRank;
+    public Vector3 finalPlayerPosition;
     public uint maximumAmmoCount = 100;
 
     private static GameManager instance = null;
@@ -47,8 +47,10 @@ public sealed class GameManager : MonoBehaviour
     [SerializeField] private Rank initialRank = null;
     [SerializeField] private float breathPauseInSeconds = 10.0F;
     [SerializeField] private int startingPlayerHealth = 3;
-    private Rank currentRank;
+
+    private int currentPlayerHealth;
     private bool isGameActive = false;
+    private bool isPausedToBreathe = true;
 
     static GameManager() { }
     private GameManager() { }
@@ -124,6 +126,7 @@ public sealed class GameManager : MonoBehaviour
     private void Start()
     {
         // TODO: Pull from player storage here.
+        // TODO: Delay this after tutorial.
         StartGameFromNormal();
     }
 
@@ -132,11 +135,7 @@ public sealed class GameManager : MonoBehaviour
         isGameActive = true;
         currentPlayerHealth = startingPlayerHealth;
         SetFirstRankInLevel(initialRank);
-        if (OnGameStarted != null)
-        {
-            OnGameStarted();
-        }
-
+        OnGameStarted?.Invoke();
         PauseGameToBreathe();
     }
 
@@ -147,6 +146,20 @@ public sealed class GameManager : MonoBehaviour
         SetFirstRankInLevel(FindFirstHighScoreLevel());
         OnGameStarted?.Invoke();
         PauseToBreathe();
+    }
+
+    public void DamagePlayer(int damageAmount)
+    {
+        if (damageAmount < 0 || isGameActive == false || isPausedToBreathe == true) { return; }
+
+        if (damageAmount > currentPlayerHealth)
+        {
+            currentPlayerHealth = 0;
+        }
+        else
+        {
+            currentPlayerHealth -= damageAmount;
+        }
     }
 
     private Rank FindFirstHighScoreLevel()
@@ -169,10 +182,14 @@ public sealed class GameManager : MonoBehaviour
 
         if (currentPlayerHealth <= 0)
         {
-            Debug.Log("GAME OVER");
             rankTimer.PauseTimer();
             isGameActive = false;
             OnGameOver?.Invoke();
+        }
+
+        if (Input.GetAxis("Fire1") > 0)
+        {
+            sentry.FireSentry();
         }
     }
 
@@ -188,6 +205,7 @@ public sealed class GameManager : MonoBehaviour
 
     private void PauseGameToBreathe()
     {
+        isPausedToBreathe = true;
         StartCoroutine(PauseToBreathe());
     }
     
@@ -202,6 +220,8 @@ public sealed class GameManager : MonoBehaviour
         {
             StartLevel();
         }
+
+        isPausedToBreathe = false;
     }
 
     private void ContinueLevelFromPauseForBreath()
