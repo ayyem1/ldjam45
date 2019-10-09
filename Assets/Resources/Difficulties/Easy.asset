@@ -20,6 +20,6 @@ MonoBehaviour:
   maxChanceToSpawnElite: 0
   minTemptationSpeed: 1
   maxTemptationSpeed: 3
-  ammoReductionForMiss: 5
-  ammoGrantForHit: 5
+  ammoReductionForMiss: 1
+  ammoGrantForHit: 3
   breathBPM: 80

@@ -212,6 +212,7 @@ public class UIManager : MonoBehaviour
         Color titleImageColor = this.titleImage.color;
         this.titleImage.color = new Color(titleImageColor.r, titleImageColor.g, titleImageColor.b, 1.0f);
         ContinueGame();
+        Metronome.UpdateMetronomeTempo(80);
     }
 
     public void ExitGame()

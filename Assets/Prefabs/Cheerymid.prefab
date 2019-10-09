@@ -128,9 +128,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitPoints: 75
   trajectoryAngleVariance: 3
-  damageAmount: 1
+  damageAmount: 3
   poppingSound: {fileID: 5992806601490148691}
-  bossDiedSound: {fileID: -8579212510617732594}
   particlesToShowOnDestroy: {fileID: 4867330701692031175}
 --- !u!136 &-6739569007959015763
 CapsuleCollider:

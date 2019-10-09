@@ -16,5 +16,5 @@ MonoBehaviour:
   rankName: Person
   nextRank: {fileID: 11400000, guid: 9d9fc7fc17eb7d9498a0c87fee33a1c4, type: 2}
   gameMode: 0
-  difficulty: {fileID: 11400000, guid: 1ad4ec1a8c51f554da7ef36529c671d6, type: 2}
+  difficulty: {fileID: 11400000, guid: 2fa668b1391c07043b115b49b094f4aa, type: 2}
   isBoss: 0

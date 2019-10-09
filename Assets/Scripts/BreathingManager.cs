@@ -9,7 +9,7 @@ public class BreathingManager : MonoBehaviour
     public static event BreathEvent OnMiss;
     public static event BreathEvent OnFail;
 
-    public const float INPUT_GRACE_BUFFER = 0.1f;
+    public const float INPUT_GRACE_BUFFER = 0.2f;
 
     public AudioSource clickSound;
     public AudioSource goodBreathSound;
@@ -21,9 +21,15 @@ public class BreathingManager : MonoBehaviour
 
     private double _rawInputTimestamp = 0;
 
+    private float drainRateInSeconds = 0.5f; 
+
     private double adjustedInputTimestamp
     {
-        get { return _rawInputTimestamp - this.calibrationValue; }
+        get
+        {
+            return (_rawInputTimestamp - this.calibrationValue);
+            
+        }
         set { _rawInputTimestamp = value; }
     }
 
@@ -34,6 +40,7 @@ public class BreathingManager : MonoBehaviour
         Metronome.OnBeat += this.PlayClickSound;
         GameManager.OnGameStarted += OnGameStarted;
         GameManager.OnGameOver += OnGameOver;
+        StartCoroutine(this.DrainAmmo());
     }
 
     private void OnDestroy()
@@ -67,11 +74,7 @@ public class BreathingManager : MonoBehaviour
         {
             if (BreathingManager.calibrationKeys.Count < 20)
             {
-                double calibrationTimestamp = AudioSettings.dspTime;
-
-                BreathingManager.calibrationKeys.Add(calibrationTimestamp - Metronome.currentBeatTime);
-
-                this.SetCalibrationAverage();
+                this.UpdateCalibration();
             }
 
             if (GameManager.Instance.isGameActive == false &&  GameManager.Instance.tutorialStarted == false)
@@ -92,6 +95,28 @@ public class BreathingManager : MonoBehaviour
         }
     }
     #endregion
+
+    private void UpdateCalibration()
+    {
+        this.GetCalibrationValue();
+        this.SetCalibrationAverage();
+    }
+
+    private void GetCalibrationValue()
+    {
+        double calibrationTimestamp = AudioSettings.dspTime;
+        double preBeatCalibration = Metronome.nextBeatTime - calibrationTimestamp;
+        double postBeatCalibration = calibrationTimestamp - Metronome.currentBeatTime;
+
+        if (preBeatCalibration < postBeatCalibration)
+        {
+            BreathingManager.calibrationKeys.Add(preBeatCalibration);
+        }
+        else
+        {
+            BreathingManager.calibrationKeys.Add(postBeatCalibration);
+        }
+    }
 
     private void SetCalibrationAverage()
     {
@@ -182,6 +207,16 @@ public class BreathingManager : MonoBehaviour
             {
                 BreathingManager.OnMiss();
             }
+        }
+    }
+
+    private IEnumerator DrainAmmo()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(this.drainRateInSeconds);
+
+            GameManager.Instance.RemoveAmmo(1);
         }
     }
     #endregion
