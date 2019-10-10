@@ -16,7 +16,7 @@ public class Temptation : MonoBehaviour
     public AudioSource poppingSound;
 
     private Camera mainCamera = null;
-    [SerializeField] private ParticleSystem particlesToShowOnDestroy;
+    [SerializeField] private ParticleSystem particlesToShowOnDestroy = null;
 
     private void Awake()
     {

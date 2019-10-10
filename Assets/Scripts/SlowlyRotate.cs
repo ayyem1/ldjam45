@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SlowlyRotate : MonoBehaviour
 {
     public GameObject parentGameObject;
     public float rotateSpeed = 1;
-    private float rotateAngle = 0;
 
     // Update is called once per frame
     void FixedUpdate()

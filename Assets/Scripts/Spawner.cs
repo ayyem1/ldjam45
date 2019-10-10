@@ -7,9 +7,9 @@ public class Spawner : MonoBehaviour
     public static int numSpawnedEliteTemptations;
     public static int numSpawnedTemptations;
 
-    [SerializeField] private GameObject temptationPrefab;
-    [SerializeField] private GameObject eliteTemptationPrefab;
-    [SerializeField] private GameObject cheerymidPrefab;
+    [SerializeField] private GameObject temptationPrefab = null;
+    [SerializeField] private GameObject eliteTemptationPrefab = null;
+    [SerializeField] private GameObject cheerymidPrefab = null;
     private float secondsBetweenSpawnAttempt;
     private float probabiltyOfSpawnSuccess;
     private float probabilityOfEliteSpawn;

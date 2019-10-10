@@ -21,8 +21,6 @@ public class BreathingManager : MonoBehaviour
 
     private double _rawInputTimestamp = 0;
 
-    private float drainRateInSeconds = 0.5f; 
-
     private double adjustedInputTimestamp
     {
         get
@@ -40,7 +38,6 @@ public class BreathingManager : MonoBehaviour
         Metronome.OnBeat += this.PlayClickSound;
         GameManager.OnGameStarted += OnGameStarted;
         GameManager.OnGameOver += OnGameOver;
-        StartCoroutine(this.DrainAmmo());
     }
 
     private void OnDestroy()
@@ -207,16 +204,6 @@ public class BreathingManager : MonoBehaviour
             {
                 BreathingManager.OnMiss();
             }
-        }
-    }
-
-    private IEnumerator DrainAmmo()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(this.drainRateInSeconds);
-
-            GameManager.Instance.RemoveAmmo(1);
         }
     }
     #endregion

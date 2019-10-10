@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class FadePanel : MonoBehaviour {
 
   [SerializeField]
-  private Image panelToFade;
+  private Image panelToFade = null;
 
 	// Use this for initialization
 	void Start () {
